@@ -1,13 +1,10 @@
-'use client'
-
-import QuillEditor from './components/quill-editor';
+import Link from "next/link";
 
 export default function Home() {
-
   return (
     <div>
-      <QuillEditor />
-      
+      <Link href={"/create"}>Create</Link>
+      <Link href={"/learn"}>Learn</Link>
     </div>
   );
 }

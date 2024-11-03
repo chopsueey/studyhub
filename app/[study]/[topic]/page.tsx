@@ -1,6 +1,6 @@
-import { getAllNotes } from "@/backend/serveractions/Note";
+import Notes from "@/app/components/notes";
 import Link from "next/link";
-import slug from "slug";
+import { Suspense } from "react";
 
 export default async function NewTopic({
   params,
@@ -8,11 +8,6 @@ export default async function NewTopic({
   params: Promise<{ study: string; topic: string }>;
 }) {
   const { topic, study } = await params;
-  const notesDB = await getAllNotes();
-
-  if (!notesDB) {
-    return <h1>An error occured while loading your notes.</h1>;
-  }
 
   return (
     <div>
@@ -22,22 +17,9 @@ export default async function NewTopic({
         across all notes to this topic.
       </h2>
 
-      <div className="flex space-x-2">
-        {notesDB.length > 0 ? (
-          notesDB.map((note) => (
-            <Link
-              key={Math.random()}
-              href={`/${study}/${topic}/${slug(String(note._id))}`}
-            >
-              <div className="border w-fit p-2 hover:bg-slate-300">
-                <p>{String(note.createdAt.toLocaleString())}</p>
-              </div>
-            </Link>
-          ))
-        ) : (
-          <div>Nothing found. Create a note first.</div>
-        )}
-      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Notes study={study} topic={topic} />
+      </Suspense>
 
       <div className="border w-fit p-2 bg-green-500/80 hover:bg-green-500">
         <Link href={`/${study}/new-note`}>Create a new note.</Link>

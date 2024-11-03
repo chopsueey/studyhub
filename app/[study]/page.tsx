@@ -31,17 +31,17 @@ export default async function Study({
           topics.map((topic) => (
             <Link
               key={Math.random().toFixed(4)}
-              href={`/${study}/${slug(topic.title)}`}
+              href={`/${study}/${slug(topic.name)}`}
             >
               <div className="border w-fit p-2 hover:bg-slate-300">
-                <p>{topic.title}</p>
+                <p>{topic.name}</p>
               </div>
             </Link>
           ))}
       </div>
 
       <div className="border w-fit p-2 bg-green-500/80 hover:bg-green-500">
-        <CreateForm action={createTopic} what="topic" study={`${study}`} />
+        <CreateForm action={createTopic} what="topic" />
       </div>
     </div>
   );

@@ -2,12 +2,12 @@ import mongoose from 'mongoose';
 import { INote } from './Note';
 
 export interface ITopic {
-  title: string;
+  name: string;
   notes: INote[];
 }
 
 const TopicSchema = new mongoose.Schema<ITopic>({
-  title: {
+  name: {
     type: String,
     required: true
   },

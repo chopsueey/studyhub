@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,7 +14,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>{children}</body>
+      <body className={`antialiased`}>
+        <header>
+          <Link className="border hover:underline text-blue-500" href={"/"}>
+            Home
+          </Link>
+        </header>
+        {children}
+      </body>
     </html>
   );
 }

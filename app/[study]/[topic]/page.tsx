@@ -18,8 +18,8 @@ export default async function NewTopic({
     <div>
       <h1>{topic.toUpperCase()}</h1>
       <h2>
-        TODO: Display all notes for this topic, a summary
-        plus an automated quiz across all notes to this topic.
+        TODO: Display all notes for this topic, a summary plus an automated quiz
+        across all notes to this topic.
       </h2>
 
       <div className="flex space-x-2">
@@ -30,13 +30,17 @@ export default async function NewTopic({
               href={`/${study}/${topic}/${slug(String(note._id))}`}
             >
               <div className="border w-fit p-2 hover:bg-slate-300">
-                <p >{String(note.createdAt.toLocaleString())}</p>
+                <p>{String(note.createdAt.toLocaleString())}</p>
               </div>
             </Link>
           ))
         ) : (
           <div>Nothing found. Create a note first.</div>
         )}
+      </div>
+
+      <div className="border w-fit p-2 bg-green-500/80 hover:bg-green-500">
+        <Link href={`/${study}/new-note`}>Create a new note.</Link>
       </div>
     </div>
   );

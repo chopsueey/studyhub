@@ -5,7 +5,7 @@ export default async function Note({ params }: { params: { noteId: string } }) {
   // TODO: make note editable and patch existing database entry on save
   const { noteId } = await params;
   const note = await findNoteById(noteId);
-  console.log(note.content);
+  
   if (!note) {
     return (
       <div>

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 export interface QuillFormat {
   insert?: string; 
-  attributes?: { [key: string]: any };
+  attributes?: { [key: string]: unknown };
   retain?: number; 
   delete?: number; 
 }

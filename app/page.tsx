@@ -1,4 +1,5 @@
 import Link from "next/link";
+import slug from "slug";
 
 export default function Home() {
   const studies = ["Math", "Webdevelopment", "C language"];
@@ -12,7 +13,7 @@ export default function Home() {
           studies.map((subject) => (
             <Link
               key={Math.random().toFixed(4)}
-              href={`/${subject.toLowerCase()}`}
+              href={`/${slug(subject)}`}
             >
               <div className="border w-fit p-2 hover:bg-slate-300">
                 <h2 className="text-xl">{subject}</h2>

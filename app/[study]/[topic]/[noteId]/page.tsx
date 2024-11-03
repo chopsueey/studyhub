@@ -35,8 +35,8 @@ export default async function Note({ params }: { params: Promise<{ noteId: strin
 
   return (
     <div>
-      <h1>Overview of the note: {noteId.toUpperCase()}</h1>
-      <div className="max-w-screen-md mx-auto p-2" dangerouslySetInnerHTML={{ __html: html }}></div>
+      <h1>Note: {noteId.toUpperCase()}</h1>
+      <div className="max-w-screen-md mx-auto p-2 border" dangerouslySetInnerHTML={{ __html: html }}></div>
     </div>
   );
 }

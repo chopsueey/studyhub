@@ -8,13 +8,7 @@ export default async function Study({ params }: { params: Promise<{ study: strin
     <div>
       <h1>{study.toUpperCase()}</h1>
 
-      <Link key={Math.random().toFixed(4)} href={`/${study}/new-note`}>
-        <div className="border w-fit p-2 bg-green-500/80 hover:bg-green-500">
-          <h2 className="text-xl">Create new note</h2>
-        </div>
-      </Link>
-
-      <h1>Topics:</h1>
+      <h2>Topics:</h2>
       {topics.length < 1 && <div>Create a new topic first</div>}
 
       <div className="flex space-x-2">
@@ -22,11 +16,17 @@ export default async function Study({ params }: { params: Promise<{ study: strin
           topics.map((topic) => (
             <Link key={Math.random().toFixed(4)} href={`/${study}/${slug(topic)}`}>
               <div className="border w-fit p-2 hover:bg-slate-300">
-                <h2 className="text-xl">{topic}</h2>
+                <p >{topic}</p>
               </div>
             </Link>
           ))}
       </div>
+
+      <Link href={`/${study}/new-note`}>
+        <div className="border w-fit p-2 bg-green-500/80 hover:bg-green-500">
+          <p >Create new note</p>
+        </div>
+      </Link>
     </div>
   );
 }

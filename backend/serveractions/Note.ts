@@ -18,7 +18,7 @@ export async function findNoteById(id: string) {
   try {
     const note: INote | null = await Note.findOne({
       _id: id,
-    }).lean<INote>();
+    }).lean<INote>(); // after chaining .lean(): note is not of type HydratedDocument anymore as it strips of the automatically added mongoose document
 
     return note;
   } catch (err) {
@@ -28,7 +28,7 @@ export async function findNoteById(id: string) {
 }
 
 export async function postNote(clientData: QuillEditorData) {
-  console.log(clientData)
+  console.log(clientData);
   try {
     const note: HydratedDocument<INote> = new Note({
       content: clientData.ops,

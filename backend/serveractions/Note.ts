@@ -16,9 +16,9 @@ export async function getAllNotes() {
 
 export async function findNoteById(id: string) {
   try {
-    const note: HydratedDocument<INote> | null = await Note.findOne({
+    const note: INote | null = await Note.findOne({
       _id: id,
-    }).lean();
+    }).lean<INote>();
 
     return note;
   } catch (err) {

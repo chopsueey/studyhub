@@ -5,7 +5,7 @@ import slug from "slug";
 export default async function NewTopic({
   params,
 }: {
-  params: { study: string; topic: string };
+  params: Promise<{ study: string; topic: string }>;
 }) {
   const { topic, study } = await params;
   const notesDB = await getAllNotes();
@@ -29,7 +29,7 @@ export default async function NewTopic({
               href={`/${study}/${topic}/${slug(String(note._id))}`}
             >
               <div className="border w-fit p-2 hover:bg-slate-300">
-                <h2 className="text-xl">{String(note._id)}</h2>
+                <h2 className="text-xl">{String(note.createdAt.toLocaleString())}</h2>
               </div>
             </Link>
           ))

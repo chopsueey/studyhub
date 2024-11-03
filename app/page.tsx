@@ -2,8 +2,9 @@ import { connectToDatabase } from "@/backend/lib/mongoose";
 import Link from "next/link";
 import slug from "slug";
 
+await connectToDatabase(); // should be called globally or dynamically on the server as static components aren't executed again
+
 export default async function Home() {
-  await connectToDatabase();
 
   const studies = ["Math", "Webdevelopment", "C language"];
   return (

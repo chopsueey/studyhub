@@ -1,7 +1,7 @@
 import Link from "next/link";
 import slug from "slug";
 
-export default async function Study({ params }: { params: { study: string } }) {
+export default async function Study({ params }: { params: Promise<{ study: string }>}) {
   const { study } = await params;
   const topics = ["Basics", "History of ...", "Module II"];
   return (

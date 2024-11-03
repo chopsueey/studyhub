@@ -1,11 +1,11 @@
 import { findNoteById } from "@/backend/serveractions/Note";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
-export default async function Note({ params }: { params: { noteId: string } }) {
+export default async function Note({ params }: { params: Promise<{ noteId: string }> }) {
   // TODO: make note editable and patch existing database entry on save
   const { noteId } = await params;
   const note = await findNoteById(noteId);
-  
+
   if (!note) {
     return (
       <div>
@@ -36,7 +36,7 @@ export default async function Note({ params }: { params: { noteId: string } }) {
   return (
     <div>
       <h1>Overview of the note: {noteId.toUpperCase()}</h1>
-      <div dangerouslySetInnerHTML={{ __html: html }}></div>
+      <div className="max-w-screen-md mx-auto p-2" dangerouslySetInnerHTML={{ __html: html }}></div>
     </div>
   );
 }

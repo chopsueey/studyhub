@@ -31,4 +31,4 @@ const ContentSchema = new mongoose.Schema<IContent>({
   createdAt: { type: Date, default: Date.now }
 });
 
-export default mongoose.model('Content', ContentSchema);
+export default mongoose.models.Content || mongoose.model('Content', ContentSchema);

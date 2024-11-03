@@ -1,7 +1,10 @@
+import { connectToDatabase } from "@/backend/lib/mongoose";
 import Link from "next/link";
 import slug from "slug";
 
-export default function Home() {
+export default async function Home() {
+  await connectToDatabase();
+
   const studies = ["Math", "Webdevelopment", "C language"];
   return (
     <div>

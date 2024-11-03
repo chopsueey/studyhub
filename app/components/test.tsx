@@ -1,6 +1,6 @@
 import { connectToDatabase } from "@/backend/lib/mongoose.js";
 import Note from "@/backend/models/Note";
-import { postNote } from "@/backend/serveractions/postNote";
+import { postNote } from "@/backend/serveractions/Note";
 
 export default async function Test() {
   await connectToDatabase();

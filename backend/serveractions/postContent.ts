@@ -20,6 +20,23 @@ export async function getContent() {
   }
 }
 
+export async function findContent(id) {
+  try {
+    // Assuming you want to get the latest document added
+    const content = await Content.findOne({_id: id});
+    if (!content) {
+      return {message: "nothing found"};
+    }
+
+    // Return content in the format expected by Quill
+    return content;
+    
+  } catch (err) {
+    console.error(err);
+    return undefined;
+  }
+}
+
 export async function postContent(clientData: QuillEditorData) {
   try {
     const content: HydratedDocument<IContent> = new Content({

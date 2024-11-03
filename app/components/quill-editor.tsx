@@ -1,8 +1,6 @@
 "use client";
 
 import { useQuill } from "react-quilljs";
-import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
-
 import "quill/dist/quill.snow.css"; // Add css for snow theme
 
 export default function QuillEditor() {
@@ -27,20 +25,6 @@ export default function QuillEditor() {
     });
   }
 
-  const deltaOps = [
-    { insert: "This is my " },
-    { attributes: { color: "#ff9900", bold: true }, insert: "cool" },
-    { insert: " text!!!11\n" },
-  ];
-
-  const cfg = {};
-
-  const converter = new QuillDeltaToHtmlConverter(deltaOps, cfg);
-
-  const html = converter.convert();
-
-  console.log(html);
-
   // useEffect(() => {
   //   if (quill) {
   //     quill.on("text-change", (delta, oldDelta, source) => {
@@ -61,7 +45,6 @@ export default function QuillEditor() {
       >
         Save
       </button>
-      <div dangerouslySetInnerHTML={{ __html: html }}></div>
     </div>
   );
 }

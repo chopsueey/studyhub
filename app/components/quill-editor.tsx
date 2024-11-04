@@ -2,9 +2,10 @@
 
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
-import { redirect, usePathname } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 
 export default function QuillEditor() {
+  const router = useRouter()
   const path = usePathname()
   const { quill, quillRef } = useQuill();
 
@@ -28,7 +29,8 @@ export default function QuillEditor() {
 
     const pathSegments = path.split("/")
     // revalidatePath(`/${pathSegments[1]}/${pathSegments[2]}`)
-    redirect(`/${pathSegments[1]}/${pathSegments[2]}`)
+    // redirect(`/${pathSegments[1]}/${pathSegments[2]}`)
+    router.push(`/${pathSegments[1]}/${pathSegments[2]}`)
 
   }
 

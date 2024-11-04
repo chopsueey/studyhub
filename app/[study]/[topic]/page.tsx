@@ -22,7 +22,7 @@ export default async function NewTopic({
       </Suspense>
 
       <div className="border w-fit p-2 bg-green-500/80 hover:bg-green-500">
-        <Link href={`/${study}/new-note`}>Create a new note.</Link>
+        <Link href={`/${study}/${topic}/new-note`}>Create a new note.</Link>
       </div>
     </div>
   );

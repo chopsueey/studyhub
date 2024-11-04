@@ -1,13 +1,15 @@
 "use client";
 
 import { useQuill } from "react-quilljs";
-import "quill/dist/quill.snow.css"; // Add css for snow theme
+import "quill/dist/quill.snow.css";
+import { redirect, usePathname } from "next/navigation";
 
 export default function QuillEditor() {
+  const path = usePathname()
   const { quill, quillRef } = useQuill();
 
-  console.log(quill); // undefined > Quill Object
-  console.log(quillRef); // { current: undefined } > { current: Quill Editor Reference }
+  // console.log(quill); // undefined > Quill Object
+  // console.log(quillRef); // { current: undefined } > { current: Quill Editor Reference }
 
   async function saveContent() {
     let content;
@@ -23,6 +25,11 @@ export default function QuillEditor() {
       },
       body: content,
     });
+
+    const pathSegments = path.split("/")
+    // revalidatePath(`/${pathSegments[1]}/${pathSegments[2]}`)
+    redirect(`/${pathSegments[1]}/${pathSegments[2]}`)
+
   }
 
   // useEffect(() => {

@@ -29,13 +29,13 @@ export async function findNoteById(id: string) {
 
 export async function postNote(clientData: QuillEditorData) {
   console.log(clientData);
+
   try {
     const note: HydratedDocument<INote> = new Note({
       content: clientData.ops,
     });
 
-    const savedContent = await note.save();
-    return savedContent;
+    await note.save();
   } catch (err) {
     console.log(err);
     return undefined;

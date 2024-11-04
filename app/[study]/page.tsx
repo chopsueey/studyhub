@@ -41,7 +41,7 @@ export default async function Study({
       </div>
 
       <div className="border w-fit p-2 bg-green-500/80 hover:bg-green-500">
-        <CreateForm action={createTopic} what="topic" />
+        <CreateForm action={createTopic} what="topic" param={study}/>
       </div>
     </div>
   );

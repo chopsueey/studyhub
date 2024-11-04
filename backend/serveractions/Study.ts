@@ -29,7 +29,6 @@ export async function findStudyById(id: string) {
 }
 
 export async function createStudy(formData: FormData) {
-  console.log(formData);
   try {
     const study: HydratedDocument<IStudy> = new Study({
       name: formData.get("name"),

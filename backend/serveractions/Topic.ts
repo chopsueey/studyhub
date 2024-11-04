@@ -28,14 +28,14 @@ export async function findTopicById(id: string) {
   }
 }
 
-export async function createTopic(formData: FormData ) {
+export async function createTopic(formData: FormData, param: string ) {
   try {
     const topic: HydratedDocument<ITopic> = new Topic({
       name: formData.get("name"),
     });
 
     await topic.save();
-    revalidatePath(`/`)
+    revalidatePath(`/${param}`)
     return;
   } catch (err) {
     console.log(err);

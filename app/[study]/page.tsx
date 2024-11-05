@@ -14,13 +14,13 @@ export default async function Study({
   if (!topics) {
     return (
       <div>
-        <h1>This note does not exist anymore.</h1>
+        <h1>This topic does not exist anymore.</h1>
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="space-y-4 max-w-screen-xl mx-auto">
       <h1>{study.toUpperCase()}</h1>
 
       <h2>Topics:</h2>

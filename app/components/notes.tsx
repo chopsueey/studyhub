@@ -16,10 +16,10 @@ export default async function Notes({
   }
 
   return (
-    <div className="flex space-x-2">
+    <div className="flex space-y-2 space-y-reverse flex-wrap">
       {notesDB.length > 0 ? (
         notesDB.map((note) => (
-          <Link
+          <Link className="mr-2"
             key={Math.random()}
             href={`/${study}/${topic}/${slug(String(note._id))}`}
           >

@@ -18,7 +18,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-screen-xl mx-auto">
       <h1>Your studies:</h1>
       {studies.length < 1 && <div>Create a new study first</div>}
 

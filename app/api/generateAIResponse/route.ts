@@ -1,4 +1,4 @@
-import Note from "@/backend/models/Note";
+import Note, { QuillFormat } from "@/backend/models/Note";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       return Response.json({ message: "Note not found" });
     }
 
-    const content = note.content.map((item: any) => item.insert).join("");
+    const content = note.content.map((item: QuillFormat) => item.insert).join("");
 
     const prompts = [
       `Summarize the following content:`,

@@ -2,15 +2,12 @@
 
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
-import { redirect, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function QuillEditor() {
-  const router = useRouter()
-  const path = usePathname()
+  const router = useRouter();
+  const path = usePathname();
   const { quill, quillRef } = useQuill();
-
-  // console.log(quill); // undefined > Quill Object
-  // console.log(quillRef); // { current: undefined } > { current: Quill Editor Reference }
 
   async function saveContent() {
     let content;
@@ -27,23 +24,10 @@ export default function QuillEditor() {
       body: content,
     });
 
-    const pathSegments = path.split("/")
-    // revalidatePath(`/${pathSegments[1]}/${pathSegments[2]}`)
-    // redirect(`/${pathSegments[1]}/${pathSegments[2]}`)
-    router.push(`/${pathSegments[1]}/${pathSegments[2]}`)
+    const pathSegments = path.split("/");
 
+    router.push(`/${pathSegments[1]}/${pathSegments[2]}`);
   }
-
-  // useEffect(() => {
-  //   if (quill) {
-  //     quill.on("text-change", (delta, oldDelta, source) => {
-  //       console.log(quill.getText());
-  //       console.log(quill.getContents());
-  //       // console.log(quill.root.innerHTML);
-  //       // console.log(quillRef.current.firstChild.innerHTML);
-  //     });
-  //   }
-  // }, [quill]);
 
   return (
     <div className="w-full">
@@ -57,3 +41,14 @@ export default function QuillEditor() {
     </div>
   );
 }
+
+// useEffect(() => {
+//   if (quill) {
+//     quill.on("text-change", (delta, oldDelta, source) => {
+//       console.log(quill.getText());
+//       console.log(quill.getContents());
+//       // console.log(quill.root.innerHTML);
+//       // console.log(quillRef.current.firstChild.innerHTML);
+//     });
+//   }
+// }, [quill]);

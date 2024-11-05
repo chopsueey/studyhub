@@ -2,18 +2,23 @@
 
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function QuillEditor() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   const path = usePathname();
   const { quill, quillRef } = useQuill();
 
   async function saveContent() {
-    let content;
+    let requestBody;
 
     if (quill) {
-      content = JSON.stringify(quill.getContents());
+      const content = JSON.stringify(quill.getContents());
+      const backToObject = JSON.parse(content)
+      backToObject.id = id;
+      requestBody = JSON.stringify(backToObject)
     }
 
     await fetch("/api/save-content", {
@@ -21,12 +26,12 @@ export default function QuillEditor() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: content,
+      body: requestBody,
     });
 
     const pathSegments = path.split("/");
 
-    router.push(`/${pathSegments[1]}/${pathSegments[2]}`);
+    router.push(`/${pathSegments[1]}/${pathSegments[2]}?id=${id}`); // have to insert id for searchparams to work in notes.tsx
   }
 
   return (

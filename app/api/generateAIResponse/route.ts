@@ -20,7 +20,7 @@ export async function POST(request: Request) {
 
     const prompts = [
       `Summarize the following content:`,
-      `Give me the most important keywords or technical terms of the following content:`,
+      `Give me the most important keywords or technical terms of the following content with a short explanation:`,
       `Make a little quiz that involves the most important concepts, ideas and aspects of the following content:`,
     ];
 

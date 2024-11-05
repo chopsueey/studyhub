@@ -25,7 +25,13 @@ export default async function Home() {
       <div className="flex space-x-2">
         {studies.length > 0 &&
           studies.map((subject) => (
-            <Link key={Math.random().toFixed(4)} href={`/${slug(subject.name)}`}>
+            <Link
+              key={Math.random().toFixed(4)}
+              href={{
+                pathname: `/${slug(subject.name)}`,
+                query: { id: subject.id },
+              }}
+            >
               <div className="border w-fit p-2 hover:bg-slate-300">
                 <p>{subject.name}</p>
               </div>
@@ -34,7 +40,7 @@ export default async function Home() {
       </div>
 
       <div className="border w-fit p-2 bg-green-500/80 hover:bg-green-500">
-        <CreateForm action={createStudy} what="study"/>
+        <CreateForm action={createStudy} what="study" />
       </div>
     </div>
   );

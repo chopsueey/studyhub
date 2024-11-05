@@ -4,10 +4,13 @@ import { Suspense } from "react";
 
 export default async function NewTopic({
   params,
+  searchParams
 }: {
   params: Promise<{ study: string; topic: string }>;
+  searchParams: Promise<{ id: string }>;
 }) {
   const { topic, study } = await params;
+  const {id} = await searchParams;
 
   return (
     <div className="space-y-4 max-w-screen-xl mx-auto p-2">
@@ -18,11 +21,11 @@ export default async function NewTopic({
       </h2>
 
       <Suspense fallback={<div>Loading...</div>}>
-        <Notes study={study} topic={topic} />
+        <Notes study={study} topic={topic} id={id} />
       </Suspense>
 
       <div className="border w-fit p-2 bg-green-500/80 hover:bg-green-500">
-        <Link href={`/${study}/${topic}/new-note`}>Create a new note.</Link>
+        <Link href={{pathname: `/${study}/${topic}/new-note`, query: {id: id}}}>Create a new note.</Link>
       </div>
     </div>
   );

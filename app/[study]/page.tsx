@@ -2,36 +2,33 @@ import Link from "next/link";
 import slug from "slug";
 import CreateForm from "../components/create-form";
 import { createTopic, getAllTopics } from "@/backend/serveractions/Topic";
+import { HydratedDocument } from "mongoose";
+import { ITopic } from "@/backend/models/Topic";
 
 export default async function Study({
   params,
+  searchParams,
 }: {
   params: Promise<{ study: string }>;
+  searchParams: Promise<{ id: string }>;
 }) {
   const { study } = await params;
-  const topics = await getAllTopics();
-
-  if (!topics) {
-    return (
-      <div>
-        <h1>This topic does not exist anymore.</h1>
-      </div>
-    );
-  }
+  const {id} = await searchParams;
+  const topics: HydratedDocument<ITopic>[] | [] = await getAllTopics(id);
 
   return (
     <div className="space-y-4 max-w-screen-xl mx-auto">
       <h1>{study.toUpperCase()}</h1>
 
       <h2>Topics:</h2>
-      {topics.length < 1 && <div>Create a new topic first</div>}
+      {topics.length < 1 && <div>This study doesn&apos;t have any topics yet.</div>}
 
       <div className="flex space-x-2">
         {topics.length > 0 &&
           topics.map((topic) => (
             <Link
               key={Math.random().toFixed(4)}
-              href={`/${study}/${slug(topic.name)}`}
+              href={{pathname: `/${study}/${slug(topic.name)}`, query: {id: topic.id}}}
             >
               <div className="border w-fit p-2 hover:bg-slate-300">
                 <p>{topic.name}</p>
@@ -41,7 +38,12 @@ export default async function Study({
       </div>
 
       <div className="border w-fit p-2 bg-green-500/80 hover:bg-green-500">
-        <CreateForm action={createTopic} what="topic" param={study}/>
+        <CreateForm
+          action={createTopic}
+          what="topic"
+          param={study}
+          id={id}
+        />
       </div>
     </div>
   );

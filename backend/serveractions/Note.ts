@@ -2,12 +2,20 @@
 
 import { HydratedDocument } from "mongoose";
 import Note, { INote, QuillEditorData } from "../models/Note";
+import { ITopic, Topic } from "../models/Topic";
 
-export async function getAllNotes() {
+export async function getAllNotes(id: string) {
   try {
-    const note: HydratedDocument<INote>[] = await Note.find({});
 
-    return note;
+    const topic: ITopic | null = await Topic.findById(id).populate("notes");
+
+    if (topic == null) {
+      throw new Error("Nothing found.")
+    }
+    
+    return topic.notes as HydratedDocument<INote>[] | []
+    // const note: HydratedDocument<INote>[] = await Note.find({});
+
   } catch (err) {
     console.error(err);
     return undefined;
@@ -27,15 +35,21 @@ export async function findNoteById(id: string) {
   }
 }
 
-export async function postNote(clientData: QuillEditorData) {
-  console.log(clientData);
-
+export async function postNote(clientData: QuillEditorData & {id: string}) {
   try {
     const note: HydratedDocument<INote> = new Note({
       content: clientData.ops,
     });
 
     await note.save();
+
+    await Topic.findByIdAndUpdate(
+      clientData.id,
+      { $push: { notes: note._id } },
+      { new: true }
+    );
+
+    return;
   } catch (err) {
     console.log(err);
     return undefined;

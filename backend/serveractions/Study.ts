@@ -3,6 +3,7 @@
 import { HydratedDocument } from "mongoose";
 import { IStudy, Study } from "../models/Study";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function getAllStudies() {
   try {
@@ -29,9 +30,13 @@ export async function findStudyById(id: string) {
 }
 
 export async function createStudy(formData: FormData) {
+  const name = formData.get("name") as string;
+  if (name.trim().length < 3) {
+    throw new Error("Study name should be atleast 3 characters long.");
+  }
   try {
     const study: HydratedDocument<IStudy> = new Study({
-      name: formData.get("name"),
+      name: name,
     });
 
     await study.save();
@@ -42,4 +47,14 @@ export async function createStudy(formData: FormData) {
     console.log(err);
     return undefined;
   }
+}
+
+export async function deleteStudy(id: string) {
+  try {
+    await Study.findByIdAndDelete(id);
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+  redirect("/");
 }

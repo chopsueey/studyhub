@@ -3,6 +3,7 @@
 import { HydratedDocument } from "mongoose";
 import Note, { INote, QuillEditorData } from "../models/Note";
 import { ITopic, Topic } from "../models/Topic";
+import { redirect } from "next/navigation";
 
 export async function getAllNotes(id: string) {
   try {
@@ -54,4 +55,14 @@ export async function postNote(clientData: QuillEditorData & {id: string}) {
     console.log(err);
     return undefined;
   }
+}
+
+export async function deleteNote(id: string) {
+  try {
+    await Note.findByIdAndDelete(id);
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+  redirect("/");
 }

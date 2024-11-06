@@ -1,4 +1,5 @@
 import Notes from "@/app/components/notes";
+import { deleteTopic } from "@/backend/serveractions/Topic";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -13,8 +14,25 @@ export default async function NewTopic({
   const {id} = await searchParams;
 
   return (
-    <div className="space-y-4 max-w-screen-xl mx-auto p-2">
-      <h1>{topic.toUpperCase()}</h1>
+    <div className="space-y-4 max-w-screen-xl mx-auto ">
+      <div className="flex justify-between">
+        <h1>{topic.toUpperCase()}</h1>
+
+        <form
+          action={async () => {
+            "use server";
+            await deleteTopic(id);
+          }}
+        >
+          <button
+            type="submit"
+            className="border w-fit p-2 bg-red-500/80 hover:bg-red-500"
+          >
+            delete
+          </button>
+        </form>
+      </div>
+
       <h2>
         TODO: a summary plus an automated quiz
         across all notes to this topic (what about a direct prompt input?)

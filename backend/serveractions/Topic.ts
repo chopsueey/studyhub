@@ -4,6 +4,7 @@ import { HydratedDocument } from "mongoose";
 import { ITopic, Topic } from "../models/Topic";
 import { revalidatePath } from "next/cache";
 import { IStudy, Study } from "../models/Study";
+import { redirect } from "next/navigation";
 
 export async function getAllTopics(id: string) {
   try {
@@ -54,4 +55,14 @@ export async function createTopic(formData: FormData, param: string, id: string 
     console.log(err);
     return undefined;
   }
+}
+
+export async function deleteTopic(id: string) {
+  try {
+    await Topic.findByIdAndDelete(id);
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+  redirect("/");
 }

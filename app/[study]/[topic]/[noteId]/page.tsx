@@ -1,5 +1,5 @@
 import AiResponseButton from "@/app/components/ai-response-button";
-import { findNoteById } from "@/backend/serveractions/Note";
+import { deleteNote, findNoteById } from "@/backend/serveractions/Note";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
 export default async function Note({
@@ -49,6 +49,19 @@ export default async function Note({
         <h1>Note: {noteId.toUpperCase()}</h1>
         <div dangerouslySetInnerHTML={{ __html: html }}></div>
       </div>
+      <form
+          action={async () => {
+            "use server";
+            await deleteNote(noteId);
+          }}
+        >
+          <button
+            type="submit"
+            className="border w-fit p-2 bg-red-500/80 hover:bg-red-500"
+          >
+            delete
+          </button>
+        </form>
     </div>
   );
 }

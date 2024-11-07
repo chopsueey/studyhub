@@ -42,7 +42,7 @@ export default async function Study({
         <div>This study doesn&apos;t have any topics yet.</div>
       )}
 
-      <div className="flex space-x-2">
+      <div className="flex space-y-2 flex-col">
         {topics.length > 0 &&
           topics.map((topic) => (
             <Link
@@ -52,16 +52,14 @@ export default async function Study({
                 query: { id: topic.id },
               }}
             >
-              <div className="border w-fit p-2 hover:bg-slate-300">
+              <div className="border w-fit p-2 rounded-lg hover:bg-slate-300">
                 <p>{topic.name}</p>
               </div>
             </Link>
           ))}
       </div>
 
-      <div className="border w-fit p-2 bg-green-500/80 hover:bg-green-500">
-        <CreateForm action={createTopic} what="topic" param={study} id={id} />
-      </div>
+      <CreateForm action={createTopic} what="topic" param={study} id={id} />
     </div>
   );
 }

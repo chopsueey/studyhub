@@ -11,14 +11,16 @@ export default function QuillEditor() {
   const path = usePathname();
   const { quill, quillRef } = useQuill();
 
-  async function saveContent() {
+  async function saveContent(formData: FormData) {
     let requestBody;
+    const name = formData.get("name");
 
     if (quill) {
       const content = JSON.stringify(quill.getContents());
-      const backToObject = JSON.parse(content)
+      const backToObject = JSON.parse(content);
       backToObject.id = id;
-      requestBody = JSON.stringify(backToObject)
+      backToObject.name = name;
+      requestBody = JSON.stringify(backToObject);
     }
 
     await fetch("/api/save-content", {
@@ -35,14 +37,29 @@ export default function QuillEditor() {
   }
 
   return (
-    <div className="w-full">
-      <div className="border" ref={quillRef} />
-      <button
-        onClick={saveContent}
-        className="border p-2 hover:bg-black hover:text-white"
-      >
-        Save
-      </button>
+    <div className="w-full space-y-4">
+      <div className="border">
+        <div ref={quillRef} />
+      </div>
+      <form action={saveContent} className="space-y-2 flex flex-col w-fit">
+        <div className="space-x-2 w-fit p-2 bg-slate-200 rounded-lg">
+          <label htmlFor="name">Title:</label>
+          <input
+            className="border rounded-lg p-1"
+            name="name"
+            type="text"
+            required
+            minLength={3}
+            pattern="^(?=.*\S{3,}).*$"
+          />
+        </div>
+        <button
+          className="border rounded-lg w-fit p-2 bg-green-500/80 hover:bg-green-500"
+          type="submit"
+        >
+          Save
+        </button>
+      </form>
     </div>
   );
 }

@@ -31,9 +31,9 @@ export default function AiResponseButton({
   };
 
   return (
-    <div>
+    <div className="max-w-screen-sm">
       <button
-        className="border w-fit p-2 max-w-screen-md mx-auto bg-green-500/80 hover:bg-green-500"
+        className="w-fit p-2 rounded-lg bg-green-500/80 hover:bg-green-500"
         onClick={handleGenerateResponse}
       >
        Create {options[option]}

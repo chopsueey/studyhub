@@ -23,10 +23,12 @@ export default function CreateForm({
   };
 
   return (
-    <form action={callback} className="space-x-2">
-      <input name="name" type="text" minLength={3} />
-      <button type="submit">Create new {what}.</button>
-    </form>
+    <div className="w-fit p-2 rounded-lg bg-green-500/80 hover:bg-green-500">
+      <form action={callback} className="space-x-2">
+        <input name="name" type="text" minLength={3} />
+        <button type="submit">Create new {what}</button>
+      </form>
+    </div>
   );
 }
 

@@ -36,9 +36,10 @@ export async function findNoteById(id: string) {
   }
 }
 
-export async function postNote(clientData: QuillEditorData & {id: string}) {
+export async function postNote(clientData: QuillEditorData & {id: string, name: string}) {
   try {
     const note: HydratedDocument<INote> = new Note({
+      name: clientData.name,
       content: clientData.ops,
     });
 

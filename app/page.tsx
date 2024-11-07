@@ -32,16 +32,14 @@ export default async function Home() {
                 query: { id: subject.id },
               }}
             >
-              <div className="border w-fit p-2 hover:bg-slate-300">
+              <div className="border w-fit p-2 rounded-lg hover:bg-slate-300">
                 <p>{subject.name}</p>
               </div>
             </Link>
           ))}
       </div>
 
-      <div className="border w-fit p-2 bg-green-500/80 hover:bg-green-500">
-        <CreateForm action={createStudy} what="study" />
-      </div>
+      <CreateForm action={createStudy} what="study" />
     </div>
   );
 }

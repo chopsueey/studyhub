@@ -39,29 +39,45 @@ export default async function Note({
   // ];
 
   return (
-    <div className="flex justify-center max-w-screen-xl mx-auto p-2 space-x-4">
-      <div>
-        <AiResponseButton noteId={noteId} option={0} />
-        <AiResponseButton noteId={noteId} option={1} />
-        <AiResponseButton noteId={noteId} option={2} />
-      </div>
-      <div className="max-w-screen-md mx-auto p-2 border">
-        <h1>Note: {noteId.toUpperCase()}</h1>
-        <div dangerouslySetInnerHTML={{ __html: html }}></div>
-      </div>
-      <form
-          action={async () => {
-            "use server";
-            await deleteNote(noteId);
-          }}
+    <div className="flex flex-col mx-auto p-2">
+      <form className="ml-auto"
+        action={async () => {
+          "use server";
+          await deleteNote(noteId);
+        }}
+      >
+        <button
+          type="submit"
+          className="w-fit p-2 rounded-lg bg-red-500/80 hover:bg-red-500"
         >
-          <button
-            type="submit"
-            className="border w-fit p-2 bg-red-500/80 hover:bg-red-500"
-          >
-            delete
-          </button>
-        </form>
+          delete
+        </button>
+      </form>
+      <div className="flex mx-auto space-x-4">
+        <div>
+          <AiResponseButton noteId={noteId} option={0} />
+          <AiResponseButton noteId={noteId} option={1} />
+          <AiResponseButton noteId={noteId} option={2} />
+        </div>
+        <div className="max-w-screen-md mx-auto p-8 border rounded-lg flex-1 flex flex-col">
+          <h1 className="pl-8">{note.name}</h1>
+          <div className="p-8" dangerouslySetInnerHTML={{ __html: html }}></div>
+          <p className="text-xs bg-slate-200 rounded-full py-1 px-3 w-fit mt-auto ml-auto">
+            {String(
+              note.createdAt.toLocaleString("en-US", {
+                weekday: "long",
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+                hour12: true,
+              })
+            )}
+          </p>
+        </div>
+      </div>
+      
     </div>
   );
 }

@@ -23,11 +23,13 @@ export default async function Study({
         <h1>{study.toUpperCase()}</h1>
 
         <form
-          action={async () => {
+          action={async (formData: FormData) => {
             "use server";
+            console.log(formData);
             await deleteStudy(id);
           }}
         >
+          <input name="reason" type="text"/>
           <button
             type="submit"
             className="w-fit rounded-lg p-2 bg-red-500/80 hover:bg-red-500"

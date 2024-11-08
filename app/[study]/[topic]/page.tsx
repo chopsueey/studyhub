@@ -29,7 +29,7 @@ export default async function NewTopic({
         >
           <button
             type="submit"
-            className="border w-fit p-2 bg-red-500/80 hover:bg-red-500"
+            className="rounded-lg w-fit p-2 bg-red-500/80 hover:bg-red-500"
           >
             delete
           </button>

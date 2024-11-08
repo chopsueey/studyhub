@@ -30,7 +30,7 @@ export default async function Study({
         >
           <button
             type="submit"
-            className="border w-fit p-2 bg-red-500/80 hover:bg-red-500"
+            className="w-fit rounded-lg p-2 bg-red-500/80 hover:bg-red-500"
           >
             delete
           </button>

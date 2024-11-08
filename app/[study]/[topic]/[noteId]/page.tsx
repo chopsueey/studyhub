@@ -39,8 +39,31 @@ export default async function Note({
   // ];
 
   return (
-    <div className="flex flex-col mx-auto p-2">
-      <form className="ml-auto"
+    <div className="max-w-screen-md mx-auto p-8 border rounded-lg flex flex-col relative">
+      <div className="fixed left-[2.5%] space-y-2">
+        <AiResponseButton noteId={noteId} option={0} />
+        <AiResponseButton noteId={noteId} option={1} />
+        <AiResponseButton noteId={noteId} option={2} />
+      </div>
+      <div>
+        <p className="text-xs bg-slate-200 rounded-full py-1 px-3 w-fit mt-auto ml-auto">
+          {String(
+            note.createdAt.toLocaleString("en-US", {
+              weekday: "long",
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+              hour: "numeric",
+              minute: "2-digit",
+              hour12: true,
+            })
+          )}
+        </p>
+        <h1 className="pl-8 mt-4">{note.name}</h1>
+        <div className="p-8" dangerouslySetInnerHTML={{ __html: html }}></div>
+      </div>
+      <form
+        className="ml-auto"
         action={async () => {
           "use server";
           await deleteNote(noteId);
@@ -53,31 +76,6 @@ export default async function Note({
           delete
         </button>
       </form>
-      <div className="flex mx-auto space-x-4">
-        <div>
-          <AiResponseButton noteId={noteId} option={0} />
-          <AiResponseButton noteId={noteId} option={1} />
-          <AiResponseButton noteId={noteId} option={2} />
-        </div>
-        <div className="max-w-screen-md mx-auto p-8 border rounded-lg flex-1 flex flex-col">
-          <h1 className="pl-8">{note.name}</h1>
-          <div className="p-8" dangerouslySetInnerHTML={{ __html: html }}></div>
-          <p className="text-xs bg-slate-200 rounded-full py-1 px-3 w-fit mt-auto ml-auto">
-            {String(
-              note.createdAt.toLocaleString("en-US", {
-                weekday: "long",
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-                hour: "numeric",
-                minute: "2-digit",
-                hour12: true,
-              })
-            )}
-          </p>
-        </div>
-      </div>
-      
     </div>
   );
 }

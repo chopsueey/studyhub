@@ -14,9 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>
-        <header>
-          <Link className="border hover:underline text-blue-500" href={"/"}>
+      <body className={`antialiased relative`}>
+        <header className="min-h-[2.5vh] max-w-screen-sm mx-auto px-3 py-1 mb-8 border border-t-0 rounded-lg rounded-t-none">
+          <Link className="hover:underline text-blue-500" href={"/"}>
             Home
           </Link>
         </header>

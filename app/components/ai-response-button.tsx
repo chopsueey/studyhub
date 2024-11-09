@@ -32,7 +32,7 @@ export default function AiResponseButton({
 
   return (
     <div className="max-w-screen-sm">
-      <details className="group w-fit border my-4 border-gray-200 rounded-lg shadow-sm transition-all duration-300 open:shadow-lg open:border-gray-300">
+      <details className="group w-fit border border-gray-200 rounded-lg shadow-sm transition-all duration-300 open:shadow-lg open:border-gray-300">
         <summary className="flex items-center justify-between cursor-pointer p-4 text-lg font-semibold text-gray-700 bg-gray-100 rounded-lg group-open:bg-gray-200 group-open:text-gray-800 transition-all duration-300">
           {options[option]}
           <span className="ml-2 transform transition-transform duration-300 group-open:rotate-180">

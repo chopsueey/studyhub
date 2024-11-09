@@ -40,7 +40,7 @@ export default async function Note({
 
   return (
     <div className="max-w-screen-md mx-auto p-8 border rounded-lg flex flex-col relative">
-      <div className="fixed left-[2.5%] space-y-2">
+      <div className="max-h-screen fixed left-[2.5%] top-0 space-y-2 overflow-y-auto pr-8 pt-24">
         <AiResponseButton noteId={noteId} option={0} />
         <AiResponseButton noteId={noteId} option={1} />
         <AiResponseButton noteId={noteId} option={2} />

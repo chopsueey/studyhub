@@ -1,6 +1,6 @@
+"use client"
 
 // there must be a better way to write this
-
 export default function CreateForm({
   action,
   what,
@@ -8,7 +8,6 @@ export default function CreateForm({
   id,
 }: ServerActionsForm) {
   const callback = async (formData: FormData) => {
-    "use server"
     if (!param || !id) {
       (action as (formData: FormData) => Promise<void>)(formData);
     } else {

@@ -11,6 +11,7 @@ export interface INote {
   name: string;
   content: QuillFormat[];
   createdAt: Date;
+  updatedAt?: Date;
 }
 
 export interface QuillEditorData {
@@ -27,13 +28,16 @@ const DeltaJSONSchema = new mongoose.Schema<QuillFormat>(
   { _id: false }
 );
 
-const ContentSchema = new mongoose.Schema<INote>({
-  name: { type: String, required: true },
-  content: {
-    type: [DeltaJSONSchema],
-    required: true,
+const ContentSchema = new mongoose.Schema<INote>(
+  {
+    name: { type: String, required: true },
+    content: {
+      type: [DeltaJSONSchema],
+      required: true,
+    },
+    createdAt: { type: Date, default: Date.now },
   },
-  createdAt: { type: Date, default: Date.now },
-});
+  { timestamps: true }
+);
 
 export default mongoose.models.Note || mongoose.model("Note", ContentSchema);

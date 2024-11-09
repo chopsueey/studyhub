@@ -1,14 +1,15 @@
-import AiResponseButton from "@/app/components/ai-response-button";
+import Sidebar from "@/app/components/sidebar";
 import { deleteNote, findNoteById } from "@/backend/serveractions/Note";
+import Link from "next/link";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
 export default async function Note({
   params,
 }: {
-  params: Promise<{ noteId: string }>;
+  params: Promise<{ study: string; topic: string; noteId: string }>;
 }) {
-  // TODO: make note editable and patch existing database entry on save
-  const { noteId } = await params;
+  const { study, topic, noteId } = await params;
+
   const note = await findNoteById(noteId);
 
   if (!note) {
@@ -32,6 +33,7 @@ export default async function Note({
 
   const html = converter.convert();
 
+  // parseable format for QuillDeltaToHtmlConverter:
   // const deltaOps = [
   //   { insert: "This is my " },
   //   { attributes: { color: "#ff9900", bold: true }, insert: "cool" },
@@ -40,27 +42,44 @@ export default async function Note({
 
   return (
     <div className="max-w-screen-md mx-auto p-8 border rounded-lg flex flex-col relative">
-      <div className="max-h-screen fixed left-[2.5%] top-0 space-y-2 overflow-y-auto pr-8 pt-24">
-        <AiResponseButton noteId={noteId} option={0} />
-        <AiResponseButton noteId={noteId} option={1} />
-        <AiResponseButton noteId={noteId} option={2} />
-      </div>
+      <Sidebar noteId={noteId} />
       <div>
         <p className="text-xs bg-slate-200 rounded-full py-1 px-3 w-fit mt-auto ml-auto">
-          {String(
-            note.createdAt.toLocaleString("en-US", {
-              weekday: "long",
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-              hour: "numeric",
-              minute: "2-digit",
-              hour12: true,
-            })
-          )}
+          {note.createdAt.toLocaleString("en-US", {
+            weekday: "long",
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+          })}
+        </p>
+        <p className="text-xs rounded-full py-1 px-3 w-fit mt-2 ml-auto">
+          {note.updatedAt &&
+            "Edited: " +
+              note.updatedAt?.toLocaleString("en-US", {
+                weekday: "long",
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+                hour12: true,
+              })}
         </p>
         <h1 className="pl-8 mt-4">{note.name}</h1>
         <div className="p-8" dangerouslySetInnerHTML={{ __html: html }}></div>
+      </div>
+      <div className="w-fit p-2 rounded-lg bg-green-500/80 hover:bg-green-500">
+        <Link
+          href={{
+            pathname: `/${study}/${topic}/edit-note`,
+            query: { id: noteId },
+          }}
+        >
+          Edit
+        </Link>
       </div>
       <form
         className="ml-auto"

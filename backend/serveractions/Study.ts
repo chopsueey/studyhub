@@ -4,6 +4,10 @@ import { HydratedDocument } from "mongoose";
 import { IStudy, Study } from "../models/Study";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { connectToDatabase } from "../lib/mongoose";
+
+await connectToDatabase(); // in production: should be called globally or dynamically on the server as static components aren't executed again
+
 
 export async function getAllStudies() {
   try {

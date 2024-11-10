@@ -36,10 +36,13 @@ export async function createStudy(formData: FormData) {
   if (name.trim().length < 3) {
     throw new Error("Study name should be atleast 3 characters long.");
   }
+  console.log(name)
   try {
     const study: HydratedDocument<IStudy> = new Study({
       name: name,
     });
+
+    console.log(study)
 
     const savedStudy = await study.save();
     console.log(savedStudy);

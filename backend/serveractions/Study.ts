@@ -46,12 +46,12 @@ export async function createStudy(formData: FormData) {
 
     const savedStudy = await study.save();
     console.log(savedStudy);
-    revalidatePath("/");
-    return;
+    
   } catch (err) {
     console.log(err);
     return undefined;
   }
+  revalidatePath("/");
 }
 
 export async function deleteStudy(id: string) {

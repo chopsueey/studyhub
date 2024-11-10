@@ -1,4 +1,3 @@
-import { connectToDatabase } from "@/backend/lib/mongoose";
 import { createStudy, getAllStudies } from "@/backend/serveractions/Study";
 import Link from "next/link";
 import slug from "slug";

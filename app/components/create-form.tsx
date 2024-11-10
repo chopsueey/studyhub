@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 // there must be a better way to write this
 export default function CreateForm({
@@ -9,14 +9,14 @@ export default function CreateForm({
 }: ServerActionsForm) {
   const callback = async (formData: FormData) => {
     if (!param || !id) {
-      (action as (formData: FormData) => Promise<void>)(formData);
+      await (action as (formData: FormData) => Promise<void>)(formData);
     } else {
       (
-        action as (
+        await (action as (
           formData: FormData,
           param: string,
           id: string
-        ) => Promise<void>
+        ) => Promise<void>)
       )(formData, param, id);
     }
   };
@@ -24,7 +24,13 @@ export default function CreateForm({
   return (
     <div className="w-fit px-4 py-2 rounded-lg bg-green-500 font-semibold shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-300">
       <form action={callback} className="space-x-2">
-        <input className="border rounded-lg p-1" name="name" type="text" minLength={3} required />
+        <input
+          className="border rounded-lg p-1"
+          name="name"
+          type="text"
+          minLength={3}
+          required
+        />
         <button type="submit">New {what}</button>
       </form>
     </div>

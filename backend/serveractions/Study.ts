@@ -30,6 +30,8 @@ export async function findStudyById(id: string) {
 }
 
 export async function createStudy(formData: FormData) {
+  console.log(formData);
+
   const name = formData.get("name") as string;
   if (name.trim().length < 3) {
     throw new Error("Study name should be atleast 3 characters long.");
@@ -39,8 +41,8 @@ export async function createStudy(formData: FormData) {
       name: name,
     });
 
-    await study.save();
-
+    const savedStudy = await study.save();
+    console.log(savedStudy);
     revalidatePath("/");
     return;
   } catch (err) {
@@ -56,5 +58,6 @@ export async function deleteStudy(id: string) {
     console.log(err);
     return;
   }
+  revalidatePath("/");
   redirect("/");
 }

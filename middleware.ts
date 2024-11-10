@@ -8,6 +8,7 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
+// connect to database before even sending homepage back
 export const config = {
   matcher: '/',
 };

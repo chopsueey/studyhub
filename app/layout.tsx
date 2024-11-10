@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
+import { connectToDatabase } from "@/backend/lib/mongoose";
+
+await connectToDatabase(); // in production: should be called globally or dynamically on the server as static components aren't executed again
 
 export const metadata: Metadata = {
   title: "Create Next App",

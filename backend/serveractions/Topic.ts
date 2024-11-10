@@ -5,10 +5,8 @@ import { ITopic, Topic } from "../models/Topic";
 import { revalidatePath } from "next/cache";
 import { IStudy, Study } from "../models/Study";
 import { redirect } from "next/navigation";
-import { connectToDatabase } from "../lib/mongoose";
 
 export async function getAllTopics(id: string) {
-  connectToDatabase();
   try {
     const study: IStudy | null = await Study.findById(id).populate("topics");
     

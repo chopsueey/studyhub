@@ -4,8 +4,6 @@ import Link from "next/link";
 import slug from "slug";
 import CreateForm from "./components/create-form";
 
-await connectToDatabase(); // in production: should be called globally or dynamically on the server as static components aren't executed again
-
 export default async function Home() {
   const studies = await getAllStudies();
 

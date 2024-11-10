@@ -5,6 +5,9 @@ import { ITopic, Topic } from "../models/Topic";
 import { revalidatePath } from "next/cache";
 import { IStudy, Study } from "../models/Study";
 import { redirect } from "next/navigation";
+import { connectToDatabase } from "../lib/mongoose";
+
+await connectToDatabase(); // in production: should be called globally or dynamically on the server as static components aren't executed again
 
 export async function getAllTopics(id: string) {
   try {

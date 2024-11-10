@@ -4,6 +4,9 @@ import { HydratedDocument } from "mongoose";
 import Note, { INote, QuillEditorData } from "../models/Note";
 import { ITopic, Topic } from "../models/Topic";
 import { redirect } from "next/navigation";
+import { connectToDatabase } from "../lib/mongoose";
+
+await connectToDatabase(); // in production: should be called globally or dynamically on the server as static components aren't executed again
 
 export async function getAllNotes(id: string) {
   try {

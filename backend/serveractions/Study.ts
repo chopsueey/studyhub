@@ -8,7 +8,6 @@ import { connectToDatabase } from "../lib/mongoose";
 
 await connectToDatabase(); // in production: should be called globally or dynamically on the server as static components aren't executed again
 
-
 export async function getAllStudies() {
   try {
     const study: HydratedDocument<IStudy>[] = await Study.find({});

@@ -1,15 +1,17 @@
 ## studyhub
 
-I wanted something to collect all of my notes at one place, as all of my notes are usually
-scattered across my desktop and other folders. Additionaly, I thought it would be cool, if I could
+I wanted something to collect all of my notes at one place, as my notes are usually
+scattered across my desktop and other folders. Additionally, I thought it would be cool, if I could
 just pass my note and it's content directly to any AI provider just by clicking a button.
 
 I am using the google gemini api with the free gemini flash model to give me a summary
-(or a quiz or whatever you want) to get the key information in just a snap.
+(or a quiz or whatever you want) to get the key information within just a snap.
 
-![cropped view](./public/cropped-view.png)
+![notes-page](./public/notes-page-standard.png)
+![notes-page](./public/notes-page-sidebar-open.png)
+![notes-page](./public/notes-page-sidebar-open-2.png)
 
-The Editor is from the QuillEditor package, so you can either
+The Editor is the QuillEditor, so you can either
 type a note directly or paste something in.
 
 ![edit notes](./public/edit-note.png)
@@ -46,6 +48,7 @@ Run:
 ```bash
 npm run dev
 ```
+or
 ```bash
 npm run build && npm start
 ```

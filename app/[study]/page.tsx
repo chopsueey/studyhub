@@ -5,6 +5,7 @@ import { createTopic, getAllTopics } from "@/backend/serveractions/Topic";
 import { HydratedDocument } from "mongoose";
 import { ITopic } from "@/backend/models/Topic";
 import { deleteStudy } from "@/backend/serveractions/Study";
+import { Trash2 } from "lucide-react";
 
 export default async function Study({
   params,
@@ -29,12 +30,13 @@ export default async function Study({
             await deleteStudy(id);
           }}
         >
-          <input name="reason" type="text"/>
+          <input name="reason" type="text" />
+
           <button
             type="submit"
-            className="w-fit rounded-lg p-2 bg-red-500/80 hover:bg-red-500"
+            className="w-fit p-2 ml-auto rounded-lg text-red-500 bg-white hover:bg-red-500 hover:text-white border hover:border-red-500 shadow-sm hover:shadow-md transition-all duration-300"
           >
-            delete
+            <Trash2 />
           </button>
         </form>
       </div>

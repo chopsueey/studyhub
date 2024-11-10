@@ -9,7 +9,7 @@ import {
 } from "@/backend/serveractions/Note";
 import { useEffect } from "react";
 
-export default function QuillEditor({ action }: { action: string }) {
+export default function QuillEditor({ action }: { action: "create" | "edit" }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams.get("id") as string;
@@ -68,6 +68,11 @@ export default function QuillEditor({ action }: { action: string }) {
       }
       loadContent();
     }
+
+    if (action == "create" && quill) {
+      quill.setText("Start your epic...");
+    }
+    
   }, [action, id, quill]);
 
   return (
@@ -90,7 +95,7 @@ export default function QuillEditor({ action }: { action: string }) {
             />
           </div>
           <button
-            className="border rounded-lg w-fit p-2 bg-green-500/80 hover:bg-green-500"
+            className="w-fit px-4 py-2 mt-4 rounded-lg bg-green-500 text-white font-semibold shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-300"
             type="submit"
           >
             Save
@@ -101,8 +106,7 @@ export default function QuillEditor({ action }: { action: string }) {
       {action == "edit" && (
         <button
           onClick={handleClick}
-          className="border rounded-lg w-fit p-2 bg-green-500/80 hover:bg-green-500"
-          type="submit"
+          className="w-fit px-4 py-2 ml-auto mt-4 rounded-lg bg-green-500 text-white font-semibold shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-300"
         >
           Update
         </button>

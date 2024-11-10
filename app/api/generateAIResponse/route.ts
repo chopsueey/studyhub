@@ -1,3 +1,4 @@
+import { connectToDatabase } from "@/backend/lib/mongoose";
 import Note, { QuillFormat } from "@/backend/models/Note";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
@@ -7,6 +8,8 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 export async function POST(request: Request) {
   const req = await request.json();
 
+  await connectToDatabase();
+  
   try {
     const { noteId, option } = req;
 

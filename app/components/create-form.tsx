@@ -22,7 +22,7 @@ export default function CreateForm({
   };
 
   return (
-    <div className="w-fit px-4 py-2 rounded-lg bg-green-500 text-white font-semibold shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-300">
+    <div className="w-fit px-4 py-2 rounded-lg bg-green-500 font-semibold shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-300">
       <form action={callback} className="space-x-2">
         <input className="border rounded-lg p-1" name="name" type="text" minLength={3} required />
         <button type="submit">New {what}</button>

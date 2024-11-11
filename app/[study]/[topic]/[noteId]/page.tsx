@@ -1,6 +1,7 @@
+import Dialog from "@/app/components/dialog";
 import Sidebar from "@/app/components/sidebar";
-import { deleteNote, findNoteById } from "@/backend/serveractions/Note";
-import { Pencil, Trash2 } from "lucide-react";
+import { findNoteById } from "@/backend/serveractions/Note";
+import { Pencil } from "lucide-react";
 import Link from "next/link";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
@@ -88,20 +89,7 @@ export default async function Note({
         <div className="p-8" dangerouslySetInnerHTML={{ __html: html }}></div>
       </div>
 
-      <form
-        className="flex px-8"
-        action={async () => {
-          "use server";
-          await deleteNote(noteId);
-        }}
-      >
-        <button
-          type="submit"
-          className="w-fit p-2 ml-auto rounded-lg text-red-500 bg-white hover:bg-red-500 hover:text-white border hover:border-red-500 shadow-sm hover:shadow-md transition-all duration-300"
-        >
-          <Trash2 />
-        </button>
-      </form>
+      <Dialog id={noteId} note={note.name} />
     </div>
   );
 }

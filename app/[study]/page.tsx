@@ -4,8 +4,7 @@ import CreateForm from "../components/create-form";
 import { createTopic, getAllTopics } from "@/backend/serveractions/Topic";
 import { HydratedDocument } from "mongoose";
 import { ITopic } from "@/backend/models/Topic";
-import { deleteStudy } from "@/backend/serveractions/Study";
-import { Trash2 } from "lucide-react";
+import Dialog from "../components/dialog";
 
 export default async function Study({
   params,
@@ -22,23 +21,7 @@ export default async function Study({
     <div className="space-y-4 max-w-screen-xl mx-auto">
       <div className="flex justify-between">
         <h1>{study.toUpperCase()}</h1>
-
-        <form
-          action={async (formData: FormData) => {
-            "use server";
-            console.log(formData);
-            await deleteStudy(id);
-          }}
-        >
-          <input name="reason" type="text" />
-
-          <button
-            type="submit"
-            className="w-fit p-2 ml-auto rounded-lg text-red-500 bg-white hover:bg-red-500 hover:text-white border hover:border-red-500 shadow-sm hover:shadow-md transition-all duration-300"
-          >
-            <Trash2 />
-          </button>
-        </form>
+          <Dialog id={id} study={study} />
       </div>
 
       <h2>Topics:</h2>

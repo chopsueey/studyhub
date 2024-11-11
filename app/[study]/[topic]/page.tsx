@@ -1,6 +1,5 @@
+import Dialog from "@/app/components/dialog";
 import Notes from "@/app/components/notes";
-import { deleteTopic } from "@/backend/serveractions/Topic";
-import { Trash2 } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -22,19 +21,7 @@ export default async function NewTopic({
       <div className="flex justify-between">
         <h1>{topic.toUpperCase()}</h1>
 
-        <form
-          action={async () => {
-            "use server";
-            await deleteTopic(id);
-          }}
-        >
-          <button
-            type="submit"
-            className="w-fit p-2 ml-auto rounded-lg text-red-500 bg-white hover:bg-red-500 hover:text-white border hover:border-red-500 shadow-sm hover:shadow-md transition-all duration-300"
-          >
-            <Trash2 />
-          </button>
-        </form>
+        <Dialog id={id} topic={topic} />
       </div>
 
       <Suspense fallback={<div>Loading...</div>}>

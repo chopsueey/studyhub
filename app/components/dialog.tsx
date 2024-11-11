@@ -4,6 +4,7 @@ import { deleteNote } from "@/backend/serveractions/Note";
 import { deleteStudy } from "@/backend/serveractions/Study";
 import { deleteTopic } from "@/backend/serveractions/Topic";
 import { Trash2 } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 export default function Dialog({
   id,
@@ -16,22 +17,50 @@ export default function Dialog({
   topic?: string;
   note?: string;
 }) {
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
+
+  function handleOutsideClick(e: MouseEvent) {
+    const dialog = dialogRef.current;
+    if (dialog) {
+      const dialogDimensions = dialog.getBoundingClientRect();
+      if (
+        e.clientX < dialogDimensions.left ||
+        e.clientX > dialogDimensions.right ||
+        e.clientY < dialogDimensions.top ||
+        e.clientY > dialogDimensions.bottom
+      ) {
+        dialog.close();
+      }
+    }
+  }
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+
+    if (dialog) {
+      dialog.addEventListener("click", handleOutsideClick);
+    }
+    return () => {
+      if (dialog)
+        return dialog.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
+
   return (
     <>
       <button
         type="button"
-        onClick={() => {
-          const dialog = document.getElementById(
-            "confirm-dialog"
-          ) as HTMLDialogElement;
-          dialog.showModal();
-        }}
+        onClick={() => dialogRef.current?.showModal()}
         className="w-fit p-2 ml-auto rounded-lg text-red-500 bg-white hover:bg-red-500 hover:text-white border hover:border-red-500 shadow-sm hover:shadow-md transition-all duration-300"
       >
         <Trash2 />
       </button>
 
-      <dialog id="confirm-dialog" className="border rounded-lg p-6 space-y-4">
+      <dialog
+        ref={dialogRef}
+        id="confirm-dialog"
+        className="rounded-lg p-6 space-y-4 shadow-md"
+      >
         <div className="space-y-2">
           <p>Are you sure you want to delete:</p>
           <p className="font-bold">
@@ -60,12 +89,7 @@ export default function Dialog({
           <button
             type="button"
             className="w-fit p-2 rounded-lg text-green-500 bg-white hover:bg-green-600 hover:text-white border hover:border-green-500 shadow-sm hover:shadow-md transition-all duration-300"
-            onClick={() => {
-              const dialog = document.getElementById(
-                "confirm-dialog"
-              ) as HTMLDialogElement;
-              dialog.close();
-            }}
+            onClick={() => dialogRef.current?.close()}
           >
             Keep
           </button>

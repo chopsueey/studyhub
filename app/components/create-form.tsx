@@ -31,7 +31,7 @@ export default function CreateForm({
           minLength={3}
           required
         />
-        <button type="submit">New {what}</button>
+        <button className="text-white" type="submit">New {what}</button>
       </form>
     </div>
   );

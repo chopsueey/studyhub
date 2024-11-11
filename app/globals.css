@@ -29,3 +29,7 @@ h2 {
   font-size: 1.5rem;
   font-weight: bold;
 }
+
+#confirm-dialog::backdrop {
+  backdrop-filter: blur(4px);
+}

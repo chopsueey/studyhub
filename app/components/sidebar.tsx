@@ -13,10 +13,10 @@ export default function Sidebar({ noteId }: { noteId: string }) {
       }`}
     >
       <button
-        className="ml-auto border rounded-full p-1 hover:border-black"
+        className="ml-auto border rounded-full p-1 hover:border-black transition-all duration-300"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? <ChevronLeft /> : <ChevronRight />}
+        {isOpen ? <ChevronLeft className="relative right-[1px]" /> : <ChevronRight className="relative left-[1px]" />}
       </button>
 
       <AiResponseButton noteId={noteId} option={0} />

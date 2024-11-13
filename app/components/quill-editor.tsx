@@ -102,7 +102,6 @@ export default function QuillEditor({ action }: { action: "create" | "edit" }) {
           </button>
         </form>
       )}
-{/* test commit */}
       {action == "edit" && (
         <button
           onClick={handleClick}

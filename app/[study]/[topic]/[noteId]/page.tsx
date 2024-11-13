@@ -35,7 +35,7 @@ export default async function Note({
 
   const html = converter.convert();
 
-  // parseable format for QuillDeltaToHtmlConverter:
+  // Format for QuillDeltaToHtmlConverter should look like this:
   // const deltaOps = [
   //   { insert: "This is my " },
   //   { attributes: { color: "#ff9900", bold: true }, insert: "cool" },

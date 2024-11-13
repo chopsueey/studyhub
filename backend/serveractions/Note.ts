@@ -44,7 +44,7 @@ export async function findNoteByIdSerialized(id: string) {
     }).lean<INote>(); // after chaining .lean(): note is not of type HydratedDocument anymore as it strips of the automatically added mongoose document
 
     if (note) {
-      return note.content;
+      return {name: note.name, content: note.content};
     }
 
     return [];

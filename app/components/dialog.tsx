@@ -13,7 +13,7 @@ export default function Dialog({
   topic,
   note,
 }: {
-  action: string;
+  action: "delete" | "save";
   id: string;
   study?: string;
   topic?: string;
@@ -50,53 +50,107 @@ export default function Dialog({
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => dialogRef.current?.showModal()}
-        className="w-fit p-2 ml-auto rounded-lg text-red-500 bg-white hover:bg-red-500 hover:text-white border hover:border-red-500 shadow-sm hover:shadow-md transition-all duration-300"
-      >
-        {action == "save" ? <Save /> : action == "delete" ? <Trash2 /> : ""}
-      </button>
+      {action == "delete" && (
+        <button
+          type="button"
+          onClick={() => dialogRef.current?.showModal()}
+          className="w-fit p-2 ml-auto rounded-lg text-red-500 bg-white hover:bg-red-500 hover:text-white border hover:border-red-500 shadow-sm hover:shadow-md transition-all duration-300"
+        >
+          <Trash2 />
+        </button>
+      )}
+      {action == "save" && (
+        <button
+          type="button"
+          onClick={() => dialogRef.current?.showModal()}
+          className="w-fit p-2 ml-auto rounded-lg text-green-500 bg-white hover:bg-green-500 hover:text-white border hover:border-green-500 shadow-sm hover:shadow-md transition-all duration-300"
+        >
+          <Save />
+        </button>
+      )}
 
-      <dialog
-        ref={dialogRef}
-        id="confirm-dialog"
-        className="rounded-lg p-6 space-y-4 shadow-md"
-      >
-        <div className="space-y-2">
-          <p>Are you sure you want to delete:</p>
-          <p className="font-bold">
-            {(study
-              ? `study ${study}`
-              : topic
-              ? `topic ${topic}`
-              : note
-              ? `note ${note}`
-              : ""
-            ).toUpperCase()}
-          </p>
-        </div>
-        <div className="flex justify-evenly">
-          <button
-            type="button"
-            className="w-fit p-2 rounded-lg text-red-500 bg-white hover:bg-red-500 hover:text-white border hover:border-red-500 shadow-sm hover:shadow-md transition-all duration-300"
-            onClick={async () => {
-              if (study) await deleteStudy(id);
-              if (topic) await deleteTopic(id);
-              if (note) await deleteNote(id);
-            }}
-          >
-            Delete
-          </button>
-          <button
-            type="button"
-            className="w-fit p-2 rounded-lg text-green-500 bg-white hover:bg-green-600 hover:text-white border hover:border-green-500 shadow-sm hover:shadow-md transition-all duration-300"
-            onClick={() => dialogRef.current?.close()}
-          >
-            Keep
-          </button>
-        </div>
-      </dialog>
+      {action == "delete" && (
+        <dialog
+          ref={dialogRef}
+          id="confirm-dialog"
+          className="rounded-lg p-6 space-y-4 shadow-md"
+        >
+          <div className="space-y-2">
+            <p>Are you sure you want to delete:</p>
+            <p className="font-bold">
+              {(study
+                ? `study: ${study}`
+                : topic
+                ? `topic: ${topic}`
+                : note
+                ? `note: ${note}`
+                : ""
+              ).toUpperCase()}
+            </p>
+          </div>
+          <div className="flex justify-evenly">
+            <button
+              type="button"
+              className="w-fit p-2 rounded-lg text-red-500 bg-white hover:bg-red-500 hover:text-white border hover:border-red-500 shadow-sm hover:shadow-md transition-all duration-300"
+              onClick={async () => {
+                if (study) await deleteStudy(id);
+                if (topic) await deleteTopic(id);
+                if (note) await deleteNote(id);
+              }}
+            >
+              Delete
+            </button>
+            <button
+              type="button"
+              className="w-fit p-2 rounded-lg text-green-500 bg-white hover:bg-green-500 hover:text-white border hover:border-green-500 shadow-sm hover:shadow-md transition-all duration-300"
+              onClick={() => dialogRef.current?.close()}
+            >
+              Keep
+            </button>
+          </div>
+        </dialog>
+      )}
+      {action == "save" && (
+        <dialog
+          ref={dialogRef}
+          id="confirm-dialog"
+          className="rounded-lg p-6 space-y-4 shadow-md"
+        >
+          <div className="space-y-2">
+            <p>Title:</p>
+            <p className="font-bold">
+              {(study
+                ? `study: ${study}`
+                : topic
+                ? `topic: ${topic}`
+                : note
+                ? `note: ${note}`
+                : ""
+              ).toUpperCase()}
+            </p>
+          </div>
+          <div className="flex justify-evenly">
+            <button
+              type="button"
+              className="w-fit p-2 rounded-lg text-red-500 bg-white hover:bg-red-500 hover:text-white border hover:border-red-500 shadow-sm hover:shadow-md transition-all duration-300"
+              onClick={() => dialogRef.current?.close()}
+            >
+              Delete
+            </button>
+            <button
+              type="button"
+              className="w-fit p-2 rounded-lg text-green-500 bg-white hover:bg-green-500 hover:text-white border hover:border-green-500 shadow-sm hover:shadow-md transition-all duration-300"
+              onClick={async () => {
+                if (study) await deleteStudy(id);
+                if (topic) await deleteTopic(id);
+                if (note) await deleteNote(id);
+              }}
+            >
+              Keep
+            </button>
+          </div>
+        </dialog>
+      )}
     </>
   );
 }

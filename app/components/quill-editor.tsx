@@ -7,9 +7,10 @@ import {
   findNoteByIdSerialized,
   patchNote,
 } from "@/backend/serveractions/Note";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function QuillEditor({ action }: { action: "create" | "edit" }) {
+  const [name, setName] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams.get("id") as string;
@@ -59,11 +60,12 @@ export default function QuillEditor({ action }: { action: "create" | "edit" }) {
   }
 
   useEffect(() => {
-    if (action === "edit" && id && quill) {
+    if (action == "edit" && id && quill) {
       async function loadContent() {
-        const content = await findNoteByIdSerialized(id);
-        if (content && quill) {
-          quill.setContents(content);
+        const note = await findNoteByIdSerialized(id);
+        if (note && quill) {
+          quill.setContents(note.content);
+          setName(note.name)
         }
       }
       loadContent();

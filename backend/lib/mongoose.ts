@@ -1,22 +1,3 @@
-// import mongoose from "mongoose";
-
-// let isConnected = false; // Track the connection
-
-// export async function connectToDatabase() {
-//   if (isConnected) {
-//     console.log("MongoDB is already connected");
-//     return;
-//   }
-
-//   try {
-//     await mongoose.connect(process.env.MONGODB_URI, {});
-//     isConnected = true;
-//     console.log("Connected to MongoDB");
-//   } catch (error) {
-//     console.error("Error connecting to MongoDB:", error);
-//   }
-// }
-
 import mongoose from "mongoose";
 
 // Use global to persist the connection status
@@ -46,3 +27,46 @@ export async function connectToDatabase() {
   globalWithMongoose.mongoose.conn = await globalWithMongoose.mongoose.promise;
   return globalWithMongoose.mongoose.conn;
 }
+
+// import mongoose from "mongoose";
+// declare global {
+//   var mongoose: any; // This must be a `var` and not a `let / const`
+// }
+
+// const MONGODB_URI = process.env.MONGODB_URI!;
+
+// if (!MONGODB_URI) {
+//   throw new Error(
+//     "Please define the MONGODB_URI environment variable inside .env.local",
+//   );
+// }
+
+// let cached = global.mongoose;
+
+// if (!cached) {
+//   cached = global.mongoose = { conn: null, promise: null };
+// }
+
+// async function dbConnect() {
+//   if (cached.conn) {
+//     return cached.conn;
+//   }
+//   if (!cached.promise) {
+//     const opts = {
+//       bufferCommands: false,
+//     };
+//     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+//       return mongoose;
+//     });
+//   }
+//   try {
+//     cached.conn = await cached.promise;
+//   } catch (e) {
+//     cached.promise = null;
+//     throw e;
+//   }
+
+//   return cached.conn;
+// }
+
+// export default dbConnect;

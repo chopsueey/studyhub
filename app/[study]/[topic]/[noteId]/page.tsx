@@ -89,7 +89,7 @@ export default async function Note({
         <div className="p-8" dangerouslySetInnerHTML={{ __html: html }}></div>
       </div>
 
-      <Dialog id={noteId} note={note.name} />
+      <Dialog action="delete" id={noteId} note={note.name} />
     </div>
   );
 }

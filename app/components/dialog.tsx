@@ -3,15 +3,17 @@
 import { deleteNote } from "@/backend/serveractions/Note";
 import { deleteStudy } from "@/backend/serveractions/Study";
 import { deleteTopic } from "@/backend/serveractions/Topic";
-import { Trash2 } from "lucide-react";
+import { Save, Trash2 } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 export default function Dialog({
+  action,
   id,
   study,
   topic,
   note,
 }: {
+  action: string;
   id: string;
   study?: string;
   topic?: string;
@@ -53,7 +55,7 @@ export default function Dialog({
         onClick={() => dialogRef.current?.showModal()}
         className="w-fit p-2 ml-auto rounded-lg text-red-500 bg-white hover:bg-red-500 hover:text-white border hover:border-red-500 shadow-sm hover:shadow-md transition-all duration-300"
       >
-        <Trash2 />
+        {action == "save" ? <Save /> : action == "delete" ? <Trash2 /> : ""}
       </button>
 
       <dialog

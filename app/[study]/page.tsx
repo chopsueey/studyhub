@@ -21,7 +21,7 @@ export default async function Study({
     <div className="space-y-4 max-w-screen-xl mx-auto">
       <div className="flex justify-between">
         <h1>{study.toUpperCase()}</h1>
-          <Dialog id={id} study={study} />
+          <Dialog action="delete" id={id} study={study} />
       </div>
 
       <h2>Topics:</h2>

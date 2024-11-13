@@ -21,7 +21,7 @@ export default async function NewTopic({
       <div className="flex justify-between">
         <h1>{topic.toUpperCase()}</h1>
 
-        <Dialog id={id} topic={topic} />
+        <Dialog action="delete" id={id} topic={topic} />
       </div>
 
       <Suspense fallback={<div>Loading...</div>}>

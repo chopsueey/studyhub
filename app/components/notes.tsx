@@ -5,13 +5,13 @@ import slug from "slug";
 export default async function Notes({
   study,
   topic,
-  id,
+  topicId,
 }: {
   study: string;
   topic: string;
-  id: string;
+  topicId: string;
 }) {
-  const notesDB = await getAllNotes(id);
+  const notesDB = await getAllNotes(topicId);
 
   if (!notesDB) {
     return <h1>An error occured while loading your notes.</h1>;

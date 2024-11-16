@@ -36,7 +36,7 @@ export default async function Study({
               key={Math.random().toFixed(4)}
               href={{
                 pathname: `/${study}/${slug(topic.name)}`,
-                query: { id: topic.id },
+                query: { topicId: topic.id },
               }}
             >
               <div className="border w-fit p-2 rounded-lg hover:bg-slate-300">

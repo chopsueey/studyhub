@@ -2,23 +2,49 @@
 
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import {
-  findNoteByIdSerialized,
-  patchNote,
-} from "@/backend/serveractions/Note";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { patchNote } from "@/backend/serveractions/Note";
+import { INote } from "@/backend/models/Note";
+import { Pencil } from "lucide-react";
+import { useContext } from "react";
+import { Context } from "../context-provider";
 
-export default function QuillEditor({ action }: { action: "create" | "edit" }) {
-  const [name, setName] = useState("");
+export default function QuillEditor({
+  action,
+  note,
+  study,
+  topic,
+}:
+  | {
+      action: "create";
+      note?: INote & { _id: string };
+      study?: string;
+      topic?: string;
+    }
+  | {
+      action: "edit";
+      note: INote & { _id: string };
+      study: string;
+      topic: string;
+    }) {
+
+  const context = useContext(Context);
+  if (!context) {
+    throw new Error(
+      "If you want to access the context, the component must a child of the context provider."
+    );
+  }
+  const { showEditor, setShowEditor } = context;
+
   const router = useRouter();
   const searchParams = useSearchParams();
-  const id = searchParams.get("id") as string;
-  const path = usePathname();
+  const topicId = searchParams.get("topicId");
   const { quill, quillRef } = useQuill();
 
-  if (action == "edit") {
+  if (action == "edit" && quill && note) {
+    quill.setContents(note.content);
   }
+
   async function saveContent(formData: FormData) {
     let requestBody;
     const name = formData.get("name");
@@ -26,93 +52,90 @@ export default function QuillEditor({ action }: { action: "create" | "edit" }) {
     if (quill) {
       const content = JSON.stringify(quill.getContents());
       const backToObject = JSON.parse(content);
-      backToObject.id = id;
+      backToObject.topicId = topicId;
       backToObject.name = name;
       requestBody = JSON.stringify(backToObject);
+
+      await fetch("/api/save-content", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: requestBody,
+      });
+
+      router.push(`/${study}/${topic}/${topicId}`); // have to insert id for searchparams to work in notes.tsx
     }
-
-    await fetch("/api/save-content", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: requestBody,
-    });
-
-    const pathSegments = path.split("/");
-
-    router.push(`/${pathSegments[1]}/${pathSegments[2]}?id=${id}`); // have to insert id for searchparams to work in notes.tsx
   }
 
   async function handleClick() {
     let requestBody;
 
-    if (quill) {
+    if (quill && note) {
       const content = JSON.stringify(quill.getContents());
       const backToObject = JSON.parse(content);
-      backToObject.id = id;
+      backToObject.topicId = topicId;
       requestBody = JSON.stringify(backToObject);
     }
     await patchNote(requestBody!);
 
-    const pathSegments = path.split("/");
-    router.push(`/${pathSegments[1]}/${pathSegments[2]}/${id}`);
+    router.push(`/${study}/${topic}/${note?._id}`);
   }
 
-  useEffect(() => {
-    if (action == "edit" && id && quill) {
-      async function loadContent() {
-        const note = await findNoteByIdSerialized(id);
-        if (note && quill) {
-          quill.setContents(note.content);
-          setName(note.name)
-        }
-      }
-      loadContent();
-    }
-
-    if (action == "create" && quill) {
-      quill.setText("Start your epic...");
-    }
-    
-  }, [action, id, quill]);
+  // useEffect(() => {
+  //   if (action == "create" && quill) {
+  //     quill.setText("Start your epic...");
+  //   }
+  // }, [action, id, quill]);
 
   return (
-    <div className="w-full space-y-4">
-      <div className="border">
-        <div ref={quillRef} />
-      </div>
-
-      {action == "create" && (
-        <form action={saveContent} className="space-y-2 flex flex-col w-fit">
-          <div className="space-x-2 w-fit p-2 bg-slate-200 rounded-lg">
-            <label htmlFor="name">Title:</label>
-            <input
-              className="border rounded-lg p-1"
-              name="name"
-              type="text"
-              required
-              minLength={3}
-              pattern="^(?=.*\S{3,}).*$"
-            />
+    <>
+      <button
+        onClick={() => setShowEditor(!showEditor)}
+        className="w-fit h-fit p-2 rounded-lg border hover:border-blue-600 inline-block shadow-sm hover:shadow-md transition-all duration-300"
+      >
+        <Pencil className="text-blue-600" />
+      </button>
+      {showEditor && (
+        <div className="w-full space-y-4">
+          <div className="border">
+            <div ref={quillRef} />
           </div>
-          <button
-            className="w-fit px-4 py-2 mt-4 rounded-lg bg-green-500 text-white font-semibold shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-300"
-            type="submit"
-          >
-            Save
-          </button>
-        </form>
+          {action == "create" && (
+            <form
+              action={saveContent}
+              className="space-y-2 flex flex-col w-fit"
+            >
+              <div className="space-x-2 w-fit p-2 bg-slate-200 rounded-lg">
+                <label htmlFor="name">Title:</label>
+                <input
+                  className="border rounded-lg p-1"
+                  name="name"
+                  type="text"
+                  required
+                  minLength={3}
+                  pattern="^(?=.*\S{3,}).*$"
+                />
+              </div>
+              <button
+                className="w-fit px-4 py-2 mt-4 rounded-lg bg-green-500 text-white font-semibold shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-300"
+                type="submit"
+              >
+                Save
+              </button>
+            </form>
+          )}
+          {action == "edit" && (
+            <button
+              onClick={handleClick}
+              className="w-fit px-4 py-2 ml-auto mt-4 rounded-lg bg-green-500 text-white font-semibold shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-300"
+            >
+              Update
+            </button>
+          )}
+        </div>
       )}
-      {action == "edit" && (
-        <button
-          onClick={handleClick}
-          className="w-fit px-4 py-2 ml-auto mt-4 rounded-lg bg-green-500 text-white font-semibold shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-300"
-        >
-          Update
-        </button>
-      )}
-    </div>
+    </>
   );
 }
 

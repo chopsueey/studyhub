@@ -3,6 +3,7 @@ import "./globals.css";
 import Link from "next/link";
 import { connectToDatabase } from "@/backend/lib/mongoose";
 import { Inter } from "next/font/google";
+import ContextProvider from "./context-provider";
 
 await connectToDatabase(); // in production: should be called globally or dynamically on the server as static components aren't executed again
 
@@ -30,7 +31,7 @@ export default function RootLayout({
             Home
           </Link>
         </header>
-        {children}
+        <ContextProvider>{children}</ContextProvider>
       </body>
     </html>
   );

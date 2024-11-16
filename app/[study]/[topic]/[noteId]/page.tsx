@@ -1,8 +1,7 @@
 import Dialog from "@/app/components/dialog";
+import QuillEditor from "@/app/components/quill-editor";
 import Sidebar from "@/app/components/sidebar";
-import { findNoteById } from "@/backend/serveractions/Note";
-import { Pencil } from "lucide-react";
-import Link from "next/link";
+import { findNoteByIdSerialized } from "@/backend/serveractions/Note";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
 export default async function Note({
@@ -12,7 +11,7 @@ export default async function Note({
 }) {
   const { study, topic, noteId } = await params;
 
-  const note = await findNoteById(noteId);
+  const note = await findNoteByIdSerialized(noteId);
 
   if (!note) {
     return (
@@ -49,15 +48,8 @@ export default async function Note({
         <div className="flex flex-col justify-between border-b space-y-4">
           <div className="flex justify-between items-end">
             <h1 className="text-5xl break-all">{note.name}</h1>
-            <Link
-              className="w-fit h-fit p-2 rounded-lg border hover:border-blue-600 inline-block shadow-sm hover:shadow-md transition-all duration-300"
-              href={{
-                pathname: `/${study}/${topic}/edit-note`,
-                query: { id: noteId },
-              }}
-            >
-              <Pencil className="text-blue-600" />
-            </Link>
+            
+            <QuillEditor action="edit" note={note} study={study} topic={topic} />
           </div>
           <div className="mr-auto pb-4 flex space-x-2">
             <p className="text-xs bg-slate-200 rounded-full py-1 px-3 w-fit mt-auto ml-auto">

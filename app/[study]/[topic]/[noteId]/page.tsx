@@ -1,7 +1,8 @@
 import Dialog from "@/app/components/dialog";
-import QuillEditor from "@/app/components/quill-editor";
 import Sidebar from "@/app/components/sidebar";
 import { findNoteByIdSerialized } from "@/backend/serveractions/Note";
+import { Pencil } from "lucide-react";
+import Link from "next/link";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
 export default async function Note({
@@ -46,10 +47,16 @@ export default async function Note({
       <Sidebar noteId={noteId} />
       <div>
         <div className="flex flex-col justify-between border-b space-y-4">
-          <div className="flex justify-between items-end">
+          <div className="flex justify-between items-center">
             <h1 className="text-5xl break-all">{note.name}</h1>
-            
-            <QuillEditor action="edit" note={note} study={study} topic={topic} />
+            <Link
+              className="w-fit h-fit p-2 rounded-lg border hover:border-blue-600 inline-block shadow-sm hover:shadow-md transition-all duration-300"
+              href={{
+                pathname: `/${study}/${topic}/${noteId}/edit-note`,
+              }}
+            >
+              <Pencil className="text-blue-600" />
+            </Link>
           </div>
           <div className="mr-auto pb-4 flex space-x-2">
             <p className="text-xs bg-slate-200 rounded-full py-1 px-3 w-fit mt-auto ml-auto">
@@ -78,7 +85,10 @@ export default async function Note({
             </p>
           </div>
         </div>
-        <div className={"note-body p-8"} dangerouslySetInnerHTML={{ __html: html }}></div>
+        <div
+          className={"note-body p-8"}
+          dangerouslySetInnerHTML={{ __html: html }}
+        ></div>
       </div>
 
       <Dialog action="delete" id={noteId} note={note.name} />

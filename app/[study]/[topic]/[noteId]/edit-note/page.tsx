@@ -1,14 +1,14 @@
-// import QuillEditor from "@/app/components/quill-editor";
-import { findNoteById } from "@/backend/serveractions/Note";
+import QuillEditor from "@/app/components/quill-editor";
+import { findNoteByIdSerialized } from "@/backend/serveractions/Note";
 
 export default async function EditNote({
   params,
 }: {
-  params: { study: string; topic: string; noteId: string };
+  params: Promise<{ study: string; topic: string; noteId: string }>;
 }) {
-  const {  noteId } = await params;
+  const { study, topic, noteId } = await params;
 
-  const note = await findNoteById(noteId);
+  const note = await findNoteByIdSerialized(noteId);
   if (!note) {
     return (
       <div>
@@ -18,7 +18,7 @@ export default async function EditNote({
   }
   return (
     <div className="max-w-screen-md m-auto flex justify-center">
-      {/* <QuillEditor action={"edit"} note={note}  /> */}
+      <QuillEditor action="edit" note={note} study={study} topic={topic} />
     </div>
   );
 }

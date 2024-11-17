@@ -5,8 +5,7 @@ import "quill/dist/quill.snow.css";
 import { useRouter, useSearchParams } from "next/navigation";
 import { patchNote } from "@/backend/serveractions/Note";
 import { INote } from "@/backend/models/Note";
-import { Pencil } from "lucide-react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Context } from "../context-provider";
 
 export default function QuillEditor({
@@ -27,15 +26,12 @@ export default function QuillEditor({
       study: string;
       topic: string;
     }) {
-
   const context = useContext(Context);
   if (!context) {
     throw new Error(
       "If you want to access the context, the component must a child of the context provider."
     );
   }
-  const { showEditor, setShowEditor } = context;
-
   const router = useRouter();
   const searchParams = useSearchParams();
   const topicId = searchParams.get("topicId");
@@ -82,59 +78,51 @@ export default function QuillEditor({
     router.push(`/${study}/${topic}/${note?._id}`);
   }
 
-  // useEffect(() => {
-  //   if (action == "create" && quill) {
-  //     quill.setText("Start your epic...");
-  //   }
-  // }, [action, id, quill]);
+  useEffect(() => {
+    if (action == "create" && quill) {
+      quill.setText("Start your epic...");
+    }
+  });
 
   return (
     <>
-      <button
-        onClick={() => setShowEditor(!showEditor)}
-        className="w-fit h-fit p-2 rounded-lg border hover:border-blue-600 inline-block shadow-sm hover:shadow-md transition-all duration-300"
-      >
-        <Pencil className="text-blue-600" />
-      </button>
-      {showEditor && (
-        <div className="w-full space-y-4">
-          <div className="border">
-            <div ref={quillRef} />
-          </div>
-          {action == "create" && (
-            <form
-              action={saveContent}
-              className="space-y-2 flex flex-col w-fit"
+      <div className="w-full space-y-4">
+        <div className="border">
+          <div ref={quillRef} />
+        </div>
+        {action == "create" && (
+          <form action={saveContent} className="space-y-2 flex flex-col w-fit">
+            <div className="space-x-2 w-fit p-2 bg-slate-200 rounded-lg">
+              <label htmlFor="name">Title:</label>
+              <input
+                className="border rounded-lg p-1"
+                name="name"
+                type="text"
+                required
+                minLength={3}
+                pattern="^(?=.*\S{3,}).*$"
+              />
+            </div>
+            <button
+              className="w-fit px-4 py-2 mt-4 rounded-lg bg-green-500 text-white font-semibold shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-300"
+              type="submit"
             >
-              <div className="space-x-2 w-fit p-2 bg-slate-200 rounded-lg">
-                <label htmlFor="name">Title:</label>
-                <input
-                  className="border rounded-lg p-1"
-                  name="name"
-                  type="text"
-                  required
-                  minLength={3}
-                  pattern="^(?=.*\S{3,}).*$"
-                />
-              </div>
-              <button
-                className="w-fit px-4 py-2 mt-4 rounded-lg bg-green-500 text-white font-semibold shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-300"
-                type="submit"
-              >
-                Save
-              </button>
-            </form>
-          )}
-          {action == "edit" && (
+              Save
+            </button>
+          </form>
+        )}
+        {action == "edit" && (
+          <>
             <button
               onClick={handleClick}
               className="w-fit px-4 py-2 ml-auto mt-4 rounded-lg bg-green-500 text-white font-semibold shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-300"
             >
               Update
             </button>
-          )}
-        </div>
-      )}
+            
+          </>
+        )}
+      </div>
     </>
   );
 }

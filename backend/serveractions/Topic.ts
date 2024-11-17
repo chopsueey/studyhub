@@ -12,13 +12,13 @@ await connectToDatabase(); // in production: should be called globally or dynami
 export async function getAllTopics(id: string) {
   try {
     const study: IStudy | null = await Study.findById(id).populate("topics");
-    
+
     if (study == null) {
-      throw new Error("Nothing found.")
+      throw new Error("Nothing found.");
     }
     // const topic: HydratedDocument<ITopic>[] = await Topic.find({});
-    
-    return study.topics as HydratedDocument<ITopic>[] | []
+
+    return study.topics as HydratedDocument<ITopic>[] | [];
   } catch (err) {
     console.error(err);
     return [];
@@ -38,7 +38,11 @@ export async function findTopicById(id: string) {
   }
 }
 
-export async function createTopic(formData: FormData, param: string, id: string ) {
+export async function createTopic(
+  formData: FormData,
+  param: string,
+  id: string
+) {
   try {
     const topic: HydratedDocument<ITopic> = new Topic({
       name: formData.get("name"),
@@ -52,7 +56,7 @@ export async function createTopic(formData: FormData, param: string, id: string 
       { new: true }
     );
 
-    revalidatePath(`/${param}`)
+    revalidatePath(`/${param}`);
     return;
   } catch (err) {
     console.log(err);
@@ -61,11 +65,12 @@ export async function createTopic(formData: FormData, param: string, id: string 
 }
 
 export async function deleteTopic(id: string) {
+  const study = await Study.findOne({ topics: id });
   try {
     await Topic.findByIdAndDelete(id);
   } catch (err) {
     console.log(err);
     return;
   }
-  redirect("/");
+  redirect(`/${study.name}?id=${study._id}`);
 }

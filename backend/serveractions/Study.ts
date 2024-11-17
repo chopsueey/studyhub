@@ -59,6 +59,5 @@ export async function deleteStudy(id: string) {
     console.log(err);
     return;
   }
-  revalidatePath("/");
   redirect("/");
 }

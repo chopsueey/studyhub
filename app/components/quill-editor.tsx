@@ -17,8 +17,8 @@ export default function QuillEditor({
   | {
       action: "create";
       note?: INote & { _id: string };
-      study?: string;
-      topic?: string;
+      study: string;
+      topic: string;
     }
   | {
       action: "edit";
@@ -60,7 +60,7 @@ export default function QuillEditor({
         body: requestBody,
       });
 
-      router.push(`/${study}/${topic}/${topicId}`); // have to insert id for searchparams to work in notes.tsx
+      router.push(`/${study}/${topic}?topicId=${topicId}`); // have to insert id for searchparams to work in notes.tsx
     }
   }
 

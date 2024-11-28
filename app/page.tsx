@@ -3,6 +3,8 @@ import Link from "next/link";
 import slug from "slug";
 import CreateForm from "./components/create-form";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const studies = await getAllStudies();
 

@@ -15,7 +15,7 @@ export default function AiResponseButton({
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const options = ["Summary", "Terms and keywords", "Quiz"];
+  const options = ["Summary", "Terms and keywords", "Quiz", "Advanced Quiz"];
 
   const handleGenerateResponse = async () => {
     setLoading(true);
@@ -29,7 +29,7 @@ export default function AiResponseButton({
     
     const data = await res.json();
 
-    if (option == 2) {
+    if (option == 2 || option == 3) {
       setResponse(JSON.parse(data.asText) || "No response from AI");
     } else {
       setResponse(data.asText || "No response from AI");
@@ -55,7 +55,7 @@ export default function AiResponseButton({
             </span>
           </summary>
           <div className="flex flex-col p-4 text-gray-600 bg-gray-50 rounded-b-lg overflow-y-scroll max-h-[50vh]">
-            {option == 2 ? (
+            {option == 2 || option == 3 ? (
               <Quiz quiz={response} />
             ) : (
               <ReactMarkDown>{response}</ReactMarkDown>

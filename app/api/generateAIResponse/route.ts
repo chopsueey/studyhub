@@ -27,11 +27,27 @@ export async function POST(request: Request) {
       `Summarize the following content:`,
       `Give me the most important keywords or technical terms of the following content with a short explanation:`,
       `Make a quiz that involves the most important concepts, ideas and aspects of the following content:`,
+      `Make an advanced quiz that is not necessarily about the following content but related to it:`,
     ];
 
     const prompt = `${prompts[option]} \n\n${content} ${
-      option == 2
-        ? "The quiz should be in a suitable JSON format, so that I can consume it directly in JavaScript."
+      option == 2 || option == 3
+        ? `The quiz should be in a suitable JSON format, like this: "{
+                "quizTitle": "Gespräch mit Suleiman & Unterricht mit Rene: Wissen & Organisation",
+                "questions": [
+                     {
+                      "question": "According to Rene, what is the difference in development between OneDrive's web and desktop versions?",
+                      "options": [
+      "The desktop version is more advanced.",
+      "The web version is 3 months ahead in development.",
+      "Both versions are identical.",
+      "The desktop version is constantly updated, while the web version is static."
+    ],
+    "answerText": "The web version is 3 months ahead in development.",
+    "answer": "B",
+  }
+    ]
+    }`
         : ""
     }`;
 
@@ -39,7 +55,7 @@ export async function POST(request: Request) {
 
     let asText = result.response.text();
 
-    if (option == 2) {
+    if (option == 2 || option == 3) {
       asText = asText.replace(/^```json\s*/, "").replace(/```/, ""); 
     }
     console.log(asText)

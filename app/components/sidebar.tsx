@@ -44,6 +44,7 @@ export default function Sidebar({ noteId }: { noteId: string }) {
       <AiResponseButton noteId={noteId} option={0} />
       <AiResponseButton noteId={noteId} option={1} />
       <AiResponseButton noteId={noteId} option={2} />
+      <AiResponseButton noteId={noteId} option={3} />
     </div>
   );
 }

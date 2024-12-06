@@ -16,15 +16,6 @@ type a note directly or paste something in.
 
 ![edit notes](./public/edit-note.png)
 
-You can create a study, which contains multiple topics, and the topics can contain
-multiple notes.
-
-![edit notes](./public/studies.png)
-
-![edit notes](./public/topics.png)
-
-![edit notes](./public/notes.png)
-
 ### Get started
 
 Prereq:

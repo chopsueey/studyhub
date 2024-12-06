@@ -1,14 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { QuizQuestions } from "./ai-response-button";
 
-export default function Quiz({
-  quiz,
-}: {
-  quizTitle: string;
-  questions: string[];
-}) {
-  const { quizTitle, questions } = quiz;
+export default function Quiz(quiz: {quiz: QuizQuestions}) {
+  const { quizTitle, questions } = quiz.quiz;
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const [questionNumber, setQuestionNumber] = useState(0);
 

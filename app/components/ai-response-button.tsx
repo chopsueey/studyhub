@@ -11,7 +11,8 @@ export default function AiResponseButton({
   noteId: string;
   option: number;
 }) {
-  const [response, setResponse] = useState("");
+  const [normalResponse, setResponse] = useState("");
+  const [quizResponse, setQuizResponse] = useState<QuizQuestions | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -26,16 +27,16 @@ export default function AiResponseButton({
       },
       body: JSON.stringify({ noteId, option }),
     });
-    
+
     const data = await res.json();
 
-    if (option == 2 || option == 3) {
-      setResponse(JSON.parse(data.asText) || "No response from AI");
-    } else {
-      setResponse(data.asText || "No response from AI");
-    }
-
     if (data.asText) {
+      if (option == 2 || option == 3) {
+        setQuizResponse(JSON.parse(data.asText));
+      } else {
+        setResponse(data.asText || "No normalResponse from AI");
+      }
+
       setIsOpen(true);
     }
     setLoading(false);
@@ -55,10 +56,10 @@ export default function AiResponseButton({
             </span>
           </summary>
           <div className="flex flex-col p-4 text-gray-600 bg-gray-50 rounded-b-lg overflow-y-scroll max-h-[50vh]">
-            {option == 2 || option == 3 ? (
-              <Quiz quiz={response} />
+            {quizResponse && (option == 2 || option == 3) ? (
+              <Quiz quiz={quizResponse} />
             ) : (
-              <ReactMarkDown>{response}</ReactMarkDown>
+              <ReactMarkDown>{normalResponse}</ReactMarkDown>
             )}
             <button
               className="w-fit px-4 py-2 ml-auto mt-4 rounded-lg bg-green-500 text-white font-semibold shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-300"
@@ -81,4 +82,16 @@ export default function AiResponseButton({
       )}
     </div>
   );
+}
+
+export interface QuizQuestions {
+    quizTitle: string;
+    questions: Question[];
+}
+
+export interface Question {
+  question: string;
+  options: string[];
+  answerText: string;
+  answer: string;
 }

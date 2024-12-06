@@ -84,7 +84,7 @@ export default function AiResponseButton({
             </span>
           </summary>
           <div className="flex flex-col p-4 text-gray-600 bg-gray-50 rounded-b-lg overflow-y-scroll max-h-[50vh]">
-            {quizResponse && <ReactMarkDown>{normalResponse}</ReactMarkDown>}
+            {normalResponse && <ReactMarkDown>{normalResponse}</ReactMarkDown>}
             <button
               className="w-fit px-4 py-2 ml-auto mt-4 rounded-lg bg-green-500 text-white font-semibold shadow-sm hover:bg-green-600 hover:shadow-md transition-all duration-300"
               onClick={handleGenerateResponse}

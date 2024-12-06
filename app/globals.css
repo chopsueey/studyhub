@@ -41,3 +41,12 @@ h2 {
 .note-body a:hover {
   text-decoration: underline;
 }
+
+.quiz-label:has(input[type="radio"]:checked) {
+  --tw-border-opacity: 1;
+  border-color: rgb(59 130 246 / var(--tw-border-opacity));
+}
+
+.quiz-label input[type="radio"] {
+  display: none;
+}

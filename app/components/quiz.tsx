@@ -40,24 +40,24 @@ export default function Quiz(quiz: {quiz: QuizQuestions}) {
       <button
         type="button"
         onClick={() => dialogRef.current?.showModal()}
-        className="w-fit p-2 ml-auto rounded-lg text-green-500 bg-white hover:bg-green-500 hover:text-white border hover:border-green-500 shadow-sm hover:shadow-md transition-all duration-300"
+        className="w-fit p-2 mx-auto rounded-lg text-green-500 bg-white hover:bg-green-500 hover:text-white border hover:border-green-500 shadow-sm hover:shadow-md transition-all duration-300"
       >
-        Start
+        Start Quiz
       </button>
       <dialog
         ref={dialogRef}
         id="confirm-dialog"
-        className="max-w-screen-md rounded-lg p-6 space-y-4 shadow-md"
+        className="max-w-screen-md rounded-lg p-8 space-y-4 shadow-md -translate-y-1/2 top-1/2"
       >
-        <div className="flex justify-center flex-col items-center space-y-4">
-          <h1>{quizTitle}</h1>
-          <div className="flex flex-col justify-center">
-            <h2 className="text-xl">{questions[questionNumber].question}</h2>
+        <div className="flex justify-center flex-col items-center space-y-16">
+          <p className="text-2xl">Quiz: <span className="italic">{quizTitle}</span></p>
+          <div className="flex flex-col justify-center space-y-4">
+            <h2 className="text-2xl p-4">{`${questionNumber + 1}. `}{questions[questionNumber].question}</h2>
             <div className="flex flex-col space-y-4 p-4">
               {questions[questionNumber].options.map((option) => {
                 return (
                   <label
-                    className="border p-3 rounded-lg hover:border-black focus-within:border-blue-500 cursor-pointer"
+                    className="border-2 p-3 quiz-label rounded-lg hover:border-blue-500 cursor-pointer transition-all duration-200"
                     key={Math.random()}
                   >
                     <input
@@ -77,7 +77,7 @@ export default function Quiz(quiz: {quiz: QuizQuestions}) {
         <div className="flex justify-evenly">
           <button
             type="button"
-            className="w-fit p-2 rounded-lg text-red-500 bg-white hover:bg-red-500 hover:text-white border hover:border-red-500 shadow-sm hover:shadow-md transition-all duration-300"
+            className="w-fit p-2 select-none rounded-lg text-red-500 bg-white hover:bg-red-500 hover:text-white border hover:border-red-500 shadow-sm hover:shadow-md transition-all duration-300"
             onClick={() =>
               questionNumber > 0 ? setQuestionNumber(questionNumber - 1) : ""
             }
@@ -86,7 +86,7 @@ export default function Quiz(quiz: {quiz: QuizQuestions}) {
           </button>
           <button
             type="button"
-            className="w-fit p-2 rounded-lg text-green-500 bg-white hover:bg-green-500 hover:text-white border hover:border-green-500 shadow-sm hover:shadow-md transition-all duration-300"
+            className="w-fit p-2 select-none rounded-lg text-green-500 bg-white hover:bg-green-500 hover:text-white border hover:border-green-500 shadow-sm hover:shadow-md transition-all duration-300"
             onClick={() =>
               questionNumber < questions.length - 1
                 ? setQuestionNumber(questionNumber + 1)

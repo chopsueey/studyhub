@@ -33,17 +33,17 @@ export async function POST(request: Request) {
     const prompt = `${prompts[option]} \n\n${content} ${
       option == 2 || option == 3
         ? `The quiz should be in a suitable JSON format, like this: "{
-                "quizTitle": "Gespräch mit Suleiman & Unterricht mit Rene: Wissen & Organisation",
+                "quizTitle": "A Quiz about Giraffes",
                 "questions": [
                      {
-                      "question": "According to Rene, what is the difference in development between OneDrive's web and desktop versions?",
+                      "question": "Where do Giraffes live?",
                       "options": [
-      "The desktop version is more advanced.",
-      "The web version is 3 months ahead in development.",
-      "Both versions are identical.",
-      "The desktop version is constantly updated, while the web version is static."
+      "The Moon",
+      "Africa",
+      "The Northpole",
+      "East-Asia"
     ],
-    "answerText": "The web version is 3 months ahead in development.",
+    "answerText": "Africa",
     "answer": "B",
   }
     ]

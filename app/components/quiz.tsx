@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { QuizQuestions } from "./ai-response-button";
 import { Check } from "lucide-react";
 
-export default function Quiz(quiz: {quiz: QuizQuestions}) {
+export default function Quiz(quiz: { quiz: QuizQuestions }) {
   const { quizTitle, questions } = quiz.quiz;
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const [questionNumber, setQuestionNumber] = useState(0);
@@ -48,17 +48,20 @@ export default function Quiz(quiz: {quiz: QuizQuestions}) {
       <dialog
         ref={dialogRef}
         id="confirm-dialog"
-        className="max-w-screen-md rounded-lg p-8 space-y-4 shadow-md -translate-y-1/2 top-1/2"
+        className="w-[768px] rounded-lg p-8 space-y-4 shadow-md -translate-y-1/2 top-1/2"
       >
         <div className="flex justify-center flex-col items-center space-y-16">
-          <p className="text-2xl">Quiz: <span className="italic">{quizTitle}</span></p>
+          <p className="text-3xl text-center px-4 italic">{quizTitle}</p>
           <div className="flex flex-col justify-center space-y-4">
-            <h2 className="text-2xl p-4">{`${questionNumber + 1}. `}{questions[questionNumber].question}</h2>
+            <h2 className="text-2xl p-4">
+              {`${questionNumber + 1}. `}
+              {questions[questionNumber].question}
+            </h2>
             <div className="flex flex-col space-y-4 p-4">
               {questions[questionNumber].options.map((option) => {
                 return (
                   <label
-                    className="border-2 p-3 quiz-label rounded-lg hover:border-blue-500 cursor-pointer transition-all duration-200 flex justify-between"
+                    className="border-2 p-3 quiz-label rounded-lg hover:border-blue-500 cursor-pointer transition-all duration-200 flex justify-between items-center"
                     key={Math.random()}
                   >
                     <input
@@ -67,13 +70,18 @@ export default function Quiz(quiz: {quiz: QuizQuestions}) {
                       value={questions[questionNumber].answerText}
                     />
                     {` ${option}`}
-                    <span className="text-blue-500"><Check /></span>
+                    <span className="text-blue-500">
+                      <Check />
+                    </span>
                   </label>
                 );
               })}
             </div>
-
-            <p>Answer: {questions[questionNumber].answerText}</p>
+            <details className="cursor-pointer">
+              <summary>Answer</summary>
+              {/* TODO: Add a "Why" button, making a prompt to AI, asking to explain the answer in more detail (based on the actual note) */}
+              <p>{questions[questionNumber].answerText}</p>
+            </details>
           </div>
         </div>
         <div className="flex justify-evenly">

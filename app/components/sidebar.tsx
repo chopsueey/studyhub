@@ -27,11 +27,13 @@ export default function Sidebar({ noteId }: { noteId: string }) {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [isOpen]);
+
   return (
     <div
+    onClick={() => !isOpen ? setIsOpen(!isOpen) : ""}
     ref={sidebarRef}
       className={`h-screen w-1/2 fixed top-0 left-0 flex flex-col space-y-8 overflow-y-auto p-8 bg-white border rounded-2xl shadow-md transition-all duration-300 ${
-        isOpen ? "-translate-x-[0]" : "-translate-x-[90%]"
+        isOpen ? "-translate-x-[0]" : "-translate-x-[90%] cursor-pointer"
       }`}
     >
       <button

@@ -45,8 +45,21 @@ h2 {
 .quiz-label:has(input[type="radio"]:checked) {
   --tw-border-opacity: 1;
   border-color: rgb(59 130 246 / var(--tw-border-opacity));
+  transition: transform 100ms;
 }
 
 .quiz-label input[type="radio"] {
   display: none;
+}
+
+.quiz-label:active {
+  transform: scale(1.1);
+}
+
+.quiz-label span {
+  display: none;
+}
+
+.quiz-label:has(input[type="radio"]:checked) span {
+  display: block;
 }

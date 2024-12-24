@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { QuizQuestions } from "./ai-response-button";
+import { Check } from "lucide-react";
 
 export default function Quiz(quiz: {quiz: QuizQuestions}) {
   const { quizTitle, questions } = quiz.quiz;
@@ -57,7 +58,7 @@ export default function Quiz(quiz: {quiz: QuizQuestions}) {
               {questions[questionNumber].options.map((option) => {
                 return (
                   <label
-                    className="border-2 p-3 quiz-label rounded-lg hover:border-blue-500 cursor-pointer transition-all duration-200"
+                    className="border-2 p-3 quiz-label rounded-lg hover:border-blue-500 cursor-pointer transition-all duration-200 flex justify-between"
                     key={Math.random()}
                   >
                     <input
@@ -66,6 +67,7 @@ export default function Quiz(quiz: {quiz: QuizQuestions}) {
                       value={questions[questionNumber].answerText}
                     />
                     {` ${option}`}
+                    <span className="text-blue-500"><Check /></span>
                   </label>
                 );
               })}

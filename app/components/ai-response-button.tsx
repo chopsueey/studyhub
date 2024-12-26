@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import ReactMarkDown from "react-markdown";
-import Quiz from "./quiz";
+import Quiz from "./quiz-dialog";
 
 export default function AiResponseButton({
   noteId,

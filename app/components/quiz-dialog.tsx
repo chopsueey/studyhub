@@ -7,6 +7,8 @@ import { Check } from "lucide-react";
 export default function Quiz(quiz: { quiz: QuizQuestions }) {
   const { quizTitle, questions } = quiz.quiz;
   const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const detailsRef = useRef<HTMLDetailsElement | null>(null);
+
   const [questionNumber, setQuestionNumber] = useState(0);
 
   function handleOutsideClick(e: MouseEvent) {
@@ -61,7 +63,7 @@ export default function Quiz(quiz: { quiz: QuizQuestions }) {
               {questions[questionNumber].options.map((option) => {
                 return (
                   <label
-                    className="border-2 p-3 quiz-label rounded-lg hover:border-blue-500 cursor-pointer transition-all duration-200 flex justify-between items-center"
+                    className="border-2 p-3 quiz-label rounded-lg cursor-pointer flex justify-between items-center"
                     key={Math.random()}
                   >
                     <input
@@ -77,7 +79,7 @@ export default function Quiz(quiz: { quiz: QuizQuestions }) {
                 );
               })}
             </div>
-            <details className="cursor-pointer">
+            <details ref={detailsRef} className="cursor-pointer">
               <summary>Answer</summary>
               {/* TODO: Add a "Why" button, making a prompt to AI, asking to explain the answer in more detail (based on the actual note) */}
               <p>{questions[questionNumber].answerText}</p>
@@ -88,20 +90,28 @@ export default function Quiz(quiz: { quiz: QuizQuestions }) {
           <button
             type="button"
             className="w-fit p-2 select-none rounded-lg text-red-500 bg-white hover:bg-red-500 hover:text-white border hover:border-red-500 shadow-sm hover:shadow-md transition-all duration-300"
-            onClick={() =>
-              questionNumber > 0 ? setQuestionNumber(questionNumber - 1) : ""
-            }
+            onClick={() => {
+              if (detailsRef.current) {
+                detailsRef.current.open = false;
+              }
+              return questionNumber > 0
+                ? setQuestionNumber(questionNumber - 1)
+                : "";
+            }}
           >
             &lt;back
           </button>
           <button
             type="button"
             className="w-fit p-2 select-none rounded-lg text-green-500 bg-white hover:bg-green-500 hover:text-white border hover:border-green-500 shadow-sm hover:shadow-md transition-all duration-300"
-            onClick={() =>
-              questionNumber < questions.length - 1
+            onClick={() => {
+              if (detailsRef.current) {
+                detailsRef.current.open = false;
+              }
+              return questionNumber < questions.length - 1
                 ? setQuestionNumber(questionNumber + 1)
-                : ""
-            }
+                : "";
+            }}
           >
             next&gt;
           </button>

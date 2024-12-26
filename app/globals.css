@@ -34,6 +34,8 @@ h2 {
   backdrop-filter: blur(4px);
 }
 
+/* start: note details: app\[study]\[topic]\[noteId]\page.tsx */
+
 .note-body a {
   color: blue;
 }
@@ -42,18 +44,25 @@ h2 {
   text-decoration: underline;
 }
 
+/* start: quiz dialog: app\components\quiz-dialog.tsx */
+
+.quiz-label {
+  transition: transform 100ms, border-color 200ms;
+}
+
+.quiz-label:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(59 130 246 / var(--tw-border-opacity));
+}
+
 .quiz-label:has(input[type="radio"]:checked) {
   --tw-border-opacity: 1;
   border-color: rgb(59 130 246 / var(--tw-border-opacity));
-  transition: transform 100ms;
+  transform: scale(1.02);
 }
 
 .quiz-label input[type="radio"] {
   display: none;
-}
-
-.quiz-label:active {
-  transform: scale(1.1);
 }
 
 .quiz-label span {

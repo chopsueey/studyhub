@@ -1,9 +1,9 @@
 import Dialog from "@/app/components/dialog";
+import NoteContent from "@/app/components/note-content";
 import Sidebar from "@/app/components/sidebar";
 import { findNoteByIdSerialized } from "@/backend/serveractions/Note";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
-import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
 export default async function Note({
   params,
@@ -21,26 +21,6 @@ export default async function Note({
       </div>
     );
   }
-
-  const converter = new QuillDeltaToHtmlConverter(note.content, {
-    encodeHtml: true,
-    inlineStyles: {
-      size: {
-        small: "font-size: 0.75em;",
-        large: "font-size: 1.5em;",
-        huge: "font-size: 2.5em;",
-      },
-    },
-  });
-
-  const html = converter.convert();
-
-  // Format for QuillDeltaToHtmlConverter should look like this:
-  // const deltaOps = [
-  //   { insert: "This is my " },
-  //   { attributes: { color: "#ff9900", bold: true }, insert: "cool" },
-  //   { insert: " text!!!11\n" },
-  // ];
 
   return (
     <div className="max-w-screen-md mx-auto p-8 border rounded-lg flex flex-col relative">
@@ -85,10 +65,8 @@ export default async function Note({
             </p>
           </div>
         </div>
-        <div
-          className={"note-body p-8"}
-          dangerouslySetInnerHTML={{ __html: html }}
-        ></div>
+
+        <NoteContent note={note.content} />
       </div>
 
       <Dialog action="delete" id={noteId} note={note.name} />

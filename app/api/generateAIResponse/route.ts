@@ -38,12 +38,12 @@ export async function POST(request: Request) {
                      {
                       "question": "Where do Giraffes live?",
                       "options": [
-      "The Moon",
-      "Africa",
-      "The Northpole",
-      "East-Asia"
+      "A: The Moon",
+      "B: Africa",
+      "C: The Northpole",
+      "D: East-Asia"
     ],
-    "answerText": "Africa",
+    "answerText": "B: Africa",
     "answer": "B",
   }
     ]
@@ -58,7 +58,7 @@ export async function POST(request: Request) {
     if (option == 2 || option == 3) {
       asText = asText.replace(/^```json\s*/, "").replace(/```/, ""); 
     }
-    console.log(asText)
+
     return Response.json({ asText });
   } catch (error) {
     return Response.json({ error });

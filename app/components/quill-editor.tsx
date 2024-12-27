@@ -70,7 +70,7 @@ export default function QuillEditor({
     if (quill && note) {
       const content = JSON.stringify(quill.getContents());
       const backToObject = JSON.parse(content);
-      backToObject.topicId = topicId;
+      backToObject.id = note._id;
       requestBody = JSON.stringify(backToObject);
     }
     await patchNote(requestBody!);

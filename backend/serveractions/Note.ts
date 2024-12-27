@@ -44,11 +44,16 @@ export async function findNoteByIdSerialized(id: string) {
     }).lean<INote>(); // after chaining .lean(): note is not of type HydratedDocument anymore as it strips of the automatically added mongoose document
 
     if (note) {
-      return {_id: id, name: note.name, content: note.content, createdAt: note.createdAt, updatedAt: note.updatedAt};
+      return {
+        _id: id,
+        name: note.name,
+        content: note.content,
+        createdAt: note.createdAt,
+        updatedAt: note.updatedAt,
+      };
     }
 
     return null;
-    
   } catch (err) {
     console.error(err);
     return undefined;
@@ -80,8 +85,9 @@ export async function postNote(
 }
 
 export async function patchNote(clientData: string) {
-  const requestBody: QuillEditorData & { id: string; name: string } =
-    await JSON.parse(clientData);
+  const requestBody: QuillEditorData & { id: string } = await JSON.parse(
+    clientData
+  );
 
   try {
     await Note.findByIdAndUpdate(

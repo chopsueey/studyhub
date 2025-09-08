@@ -7,13 +7,9 @@ just pass my note and it's content directly to any AI provider just by clicking 
 I am using the google gemini api with the free gemini flash model to give me a summary
 (or a quiz or whatever you want) to get the key information within just a snap.
 
-[![Video Title](https://img.youtube.com/vi/kMkPbBJ2p7Q/0.jpg)](https://www.youtube.com/watch?v=kMkPbBJ2p7Q)
-
-<div align="center">
-    <a href="https://www.youtube.com/watch?v=kMkPbBJ2p7Q">
-        <img src="https://img.youtube.com/vi/kMkPbBJ2p7Q/hqdefault.jpg" alt="A thumbnail for the Study Hub App video" />
-    </a>
-</div>
+<video src="assets/demo.mp4"
+       controls
+       muted playsinline></video>
 
 ![notes-page](./public/notes-page-standard.png)
 ![notes-page](./public/notes-page-sidebar-open.png)

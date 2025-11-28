@@ -3,7 +3,7 @@ import Note, { QuillFormat } from "@/backend/models/Note";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite-preview-06-17" });
+const model = genAI.getGenerativeModel({ model: "gemini-flash-lite-latest" });
 
 export async function POST(request: Request) {
   const req = await request.json();

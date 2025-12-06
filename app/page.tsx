@@ -28,7 +28,7 @@ export default async function Home() {
               key={Math.random().toFixed(4)}
               href={{
                 pathname: `/${slug(subject.name)}`,
-                query: { id: subject.id },
+                query: { id: subject._id.toString()},
               }}
             >
               <div className="border w-fit p-2 rounded-lg hover:bg-slate-300">

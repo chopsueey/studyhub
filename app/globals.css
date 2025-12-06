@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 /* :root {
   --background: #ffffff;
@@ -71,4 +69,8 @@ h2 {
 
 .quiz-label:has(input[type="radio"]:checked) span {
   visibility: visible;
+}
+
+button {
+  cursor: pointer;
 }

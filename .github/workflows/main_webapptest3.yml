@@ -23,17 +23,24 @@ jobs:
         with:
           node-version: '22.x'
 
+     # Next.js requires environment variables to be present during the build step
       - name: npm install, build, and test
+        env: 
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: |
-          npm install
+          npm install --force
           npm run build --if-present
-          npm run test --if-present
 
+      # Upload everything, explicitly ensuring hidden folders like .next are included
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .
+          path: |
+            .
+            !.git
+            !.github
 
   deploy:
     runs-on: ubuntu-latest

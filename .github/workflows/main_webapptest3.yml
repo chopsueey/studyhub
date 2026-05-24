@@ -18,24 +18,26 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '22.x'
+          node-version: "22.x"
 
       - name: npm install and build
-        env: 
+        env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: |
           npm install --force
           npm run build
 
-      # Next.js standalone mode requires public and static folders to be manually copied 
-      # into the standalone folder so the Node server can serve them.
       - name: Copy static assets to standalone output
         run: |
-          cp -R ./public ./.next/standalone/public || true
-          cp -R ./.next/static ./.next/standalone/.next/static
+          mkdir -p ./.next/standalone/public
+          mkdir -p ./.next/standalone/.next/static
 
-      # Upload ONLY the optimized standalone folder, not your whole repository root
+          # Copy contents explicitly rather than targeting parent directories
+          if [ -d "./public" ]; then cp -R ./public/. ./.next/standalone/public/; fi
+          if [ -d "./.next/static" ]; then cp -R ./.next/static/. ./.next/standalone/.next/static/; fi
+
+      # Upload ONLY the pristine, flat standalone folder contents
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -55,7 +57,7 @@ jobs:
         with:
           name: node-app
           path: ./deploy-package
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -63,10 +65,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_1692174EC7E34A89AB15BD3FF8308662 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_2ACC7569C3824F8F9D84CBF6C99075DA }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'webapptest3'
-          slot-name: 'Production'
+          app-name: "webapptest3"
+          slot-name: "Production"
           package: ./deploy-package

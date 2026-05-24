@@ -45,7 +45,8 @@ jobs:
 
           # Copy Next static files
           mkdir -p ./deploy/.next
-          cp -R ./.next/static ./deploy/.next/static
+          cp -R ./.next ./deploy/.next
+
 
           # Copy public assets
           if [ -d "./public" ]; then

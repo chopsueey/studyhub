@@ -10,7 +10,7 @@ export default function Breadcrumb() {
   const segments = path.split("/").filter((item) => item != "");
 
   return (
-    <div className="flex max-w-screen-lg mx-auto">
+    <div className="flex max-w-(--breakpoint-lg) mx-auto">
       {segments.map((segment, index) => (
         <>
           <Link

@@ -24,7 +24,7 @@ export default async function NewTopic({
   }
 
   return (
-    <div className="space-y-8 max-w-screen-xl mx-auto ">
+    <div className="space-y-8 max-w-(--breakpoint-xl) mx-auto ">
       <div className="flex justify-between">
         <h1>{topic.toUpperCase()}</h1>
 

@@ -14,7 +14,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="space-y-8 max-w-screen-xl mx-auto ">
+    <div className="space-y-8 max-w-(--breakpoint-xl) mx-auto ">
       <h1 className="mx-auto w-fit">
         An error occured or this page does not exist anymore.
       </h1>

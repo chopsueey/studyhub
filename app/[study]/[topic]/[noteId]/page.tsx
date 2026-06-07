@@ -23,7 +23,7 @@ export default async function Note({
   }
 
   return (
-    <div className="max-w-screen-md mx-auto p-8 border rounded-lg flex flex-col relative">
+    <div className="max-w-(--breakpoint-md) mx-auto p-8 border rounded-lg flex flex-col relative">
       <Sidebar noteId={noteId} />
       <div>
         <div className="flex flex-col justify-between border-b space-y-4">

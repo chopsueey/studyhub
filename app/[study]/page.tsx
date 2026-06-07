@@ -18,7 +18,7 @@ export default async function Study({
   const topics: HydratedDocument<ITopic>[] | [] = await getAllTopics(id);
 
   return (
-    <div className="space-y-4 max-w-screen-xl mx-auto">
+    <div className="space-y-4 max-w-(--breakpoint-xl) mx-auto">
       <div className="flex justify-between">
         <h1>{study.toUpperCase()}</h1>
           <Dialog action="delete" id={id} study={study} />

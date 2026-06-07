@@ -7,7 +7,7 @@ export default async function NewNote({
 }) {
   const { study, topic } = await params;
   return (
-    <div className="max-w-screen-md m-auto flex justify-center">
+    <div className="max-w-(--breakpoint-md) m-auto flex justify-center">
       <QuillEditor action={"create"} study={study} topic={topic} />
     </div>
   );

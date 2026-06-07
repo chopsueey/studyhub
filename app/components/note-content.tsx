@@ -79,19 +79,19 @@ export default function NoteContent({ note }: { note: QuillFormat[] }) {
 
       {format == "quill-to-html" && (
         <div
-          className={"note-body p-8 break-words"}
+          className={"note-body p-8 wrap-break-word"}
           dangerouslySetInnerHTML={{ __html: html }}
         ></div>
       )}
 
       {format == "md" && (
-        <div className={"note-body p-8 break-words"}>
+        <div className={"note-body p-8 wrap-break-word"}>
           <ReactMarkDown>{deltaToPlainText(note)}</ReactMarkDown>
         </div>
       )}
 
       {format == "raw" && (
-        <div className={"note-body p-8 break-words"}>
+        <div className={"note-body p-8 wrap-break-word"}>
           {deltaToPlainText(note)}
         </div>
       )}

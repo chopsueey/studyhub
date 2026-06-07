@@ -50,7 +50,7 @@ export default function Quiz(quiz: { quiz: QuizQuestions }) {
       <dialog
         ref={dialogRef}
         id="confirm-dialog"
-        className="w-[768px] rounded-lg p-8 space-y-4 shadow-md -translate-y-1/2 top-1/2"
+        className="w-3xl rounded-lg p-8 space-y-4 shadow-md inset-0 m-auto"
       >
         <div className="flex justify-center flex-col items-center space-y-16">
           <p className="text-3xl text-center px-4 italic">{quizTitle}</p>
